@@ -1,0 +1,45 @@
+.footer {
+  margin-top: var(--s-9);
+  padding-block: var(--s-8) var(--s-7);
+  border-top: var(--rule);
+  font-size: var(--t-annot);
+  line-height: 1.5;
+}
+
+.grid {
+  display: grid;
+  gap: var(--s-7);
+}
+
+.colophon {
+  display: grid;
+  gap: var(--s-4);
+  align-content: start;
+  max-width: 34ch;
+}
+
+.notice {
+  font-weight: 560;
+}
+
+.facts {
+  display: grid;
+  gap: var(--s-5);
+}
+
+.facts dt {
+  font-family: var(--f-num);
+  font-size: 0.75rem;
+  font-variation-settings: "wdth" 87;
+  margin-bottom: var(--s-1);
+}
+
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: 4fr 8fr;
+  }
+  .facts {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: var(--gutter);
+  }
+}

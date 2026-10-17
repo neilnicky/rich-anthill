@@ -1,0 +1,64 @@
+.chip {
+  display: inline-block;
+  margin-inline: 0.2em 0.1em;
+  padding: 0 0.35em;
+  border: 1.5px solid currentColor;
+  font-family: var(--f-num);
+  font-size: 0.75em;
+  font-variation-settings: "wdth" 87;
+  line-height: 1.45;
+  vertical-align: 0.12em;
+  transition: background-color var(--m-press) var(--ease-print);
+}
+
+.chip[aria-expanded="true"] {
+  background: var(--ink-umber);
+  color: var(--board);
+  border-color: var(--ink-umber);
+}
+
+@media (hover: hover) {
+  .chip:hover {
+    background: var(--board-deep);
+  }
+  .chip[aria-expanded="true"]:hover {
+    background: var(--ink-umber);
+  }
+}
+
+.panel {
+  display: grid;
+  gap: var(--s-2);
+  margin-block: var(--s-3) var(--s-2);
+  padding: var(--s-3) var(--s-4);
+  border: var(--rule);
+  background: var(--paper);
+  font-size: var(--t-annot);
+  line-height: 1.45;
+  font-weight: 400;
+  color: var(--ink-umber);
+  text-align: left;
+}
+
+.panel[hidden] {
+  display: none;
+}
+
+.meta {
+  font-family: var(--f-num);
+  font-size: 0.75rem;
+  font-variation-settings: "wdth" 87;
+}
+
+.finding {
+  font-weight: 560;
+}
+
+.limits {
+  color: var(--ink-chitin);
+}
+
+.ref {
+  font-size: var(--t-caption);
+  overflow-wrap: anywhere;
+}

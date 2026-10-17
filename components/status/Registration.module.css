@@ -1,0 +1,40 @@
+.reg {
+  display: inline-grid;
+  isolation: isolate;
+}
+
+.ghost,
+.ink {
+  grid-area: 1 / 1;
+}
+
+.ghost {
+  color: var(--ink-chitin-display);
+  transform: translate(var(--gx, 0), var(--gy, 0));
+  user-select: none;
+  pointer-events: none;
+}
+
+.ink {
+  mix-blend-mode: multiply;
+}
+
+@media (prefers-color-scheme: dark) {
+  .ink {
+    mix-blend-mode: normal;
+  }
+}
+
+.reg[data-state="reported"] {
+  --gx: var(--reg-reported-x);
+  --gy: var(--reg-reported-y);
+}
+
+.reg[data-state="hypothesis"] {
+  --gx: var(--reg-hyp-x);
+  --gy: var(--reg-hyp-y);
+}
+
+.reg[data-state="confirmed"] .ink {
+  color: var(--ink-moss-display);
+}

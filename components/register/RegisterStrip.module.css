@@ -1,0 +1,240 @@
+.strip {
+  --cell: 4.75rem;
+  min-width: 0;
+}
+
+.track {
+  list-style: none;
+  padding: 0;
+  /* Never let the row widen its container; it scrolls inside its own track instead */
+  contain: inline-size;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.item {
+  flex: none;
+  scroll-snap-align: start;
+}
+
+/* Cells share borders so the row reads as one printed strip */
+.item + .item .cell {
+  margin-left: -1.5px;
+}
+
+.cell {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  width: var(--cell);
+  aspect-ratio: 4 / 5;
+  padding: var(--s-2);
+  border: var(--rule);
+  background: var(--paper);
+  color: var(--ink-umber);
+  text-decoration: none;
+  transition: background-color var(--m-press) var(--ease-print);
+}
+
+.cell[data-empty] {
+  border: var(--rule-empty);
+  background: transparent;
+  color: var(--fleck-text);
+}
+
+.code {
+  white-space: nowrap;
+  font-family: var(--f-num);
+  font-size: 0.6875rem;
+  font-variation-settings: "wdth" 87;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.mark {
+  align-self: center;
+  justify-self: start;
+  transition: transform var(--m-shift) var(--ease-print);
+}
+
+.cell[data-status="reported"] .mark {
+  color: var(--ink-chitin-display);
+}
+
+.cell[data-status="confirmed"] .mark {
+  color: var(--ink-moss-display);
+}
+
+.food {
+  font-size: 0.75rem;
+  font-weight: 560;
+  line-height: 1.15;
+  hyphens: auto;
+  overflow-wrap: break-word;
+}
+
+.cell[data-empty] .food {
+  grid-column: 2 / -1;
+}
+
+/* The today light */
+.cell[data-latest]::after {
+  content: "";
+  position: absolute;
+  left: -1.5px;
+  right: -1.5px;
+  bottom: -9px;
+  height: 5px;
+  background: var(--ink-chitin-display);
+  transform-origin: left;
+  animation: today 480ms var(--ease-print) 300ms both;
+}
+
+@keyframes today {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+.new {
+  position: absolute;
+  top: -1.5px;
+  right: -1.5px;
+  padding: 1px 5px 2px;
+  background: var(--ink-chitin);
+  color: var(--board);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+@media (hover: hover) {
+  a.cell:hover {
+    background: var(--board-deep);
+  }
+  a.cell:hover .mark {
+    transform: translate(1px, -1px);
+  }
+}
+
+a.cell:active {
+  background: var(--board-deep);
+}
+
+a.cell:focus-visible {
+  z-index: 1;
+}
+
+/* Hero: larger cells; on wide screens the strip stands as a kiosk column */
+.strip[data-variant="hero"] {
+  --cell: clamp(4.5rem, 3.6rem + 4vw, 6.25rem);
+  padding-bottom: 12px;
+}
+
+.strip[data-variant="hero"] .code {
+  font-size: 0.75rem;
+}
+
+.strip[data-variant="hero"] .food {
+  font-size: 0.8125rem;
+}
+
+@media (min-width: 1200px) {
+  .strip[data-variant="hero"] .track {
+    flex-direction: column;
+    overflow: visible;
+    contain: none;
+  }
+  .strip[data-variant="hero"] .item + .item .cell {
+    margin-left: 0;
+    margin-top: -1.5px;
+  }
+  .strip[data-variant="hero"] .cell {
+    width: 100%;
+    aspect-ratio: auto;
+    min-height: 4.5rem;
+    grid-template-columns: 5.5rem 2.5rem 1fr;
+    grid-template-rows: 1fr;
+    align-items: center;
+    padding: var(--s-3) var(--s-4);
+  }
+  .strip[data-variant="hero"] .food {
+    font-size: var(--t-annot);
+  }
+  .strip[data-variant="hero"] .cell[data-latest]::after {
+    left: auto;
+    top: -1.5px;
+    bottom: -1.5px;
+    right: -11px;
+    width: 6px;
+    height: auto;
+    transform-origin: top;
+    animation-name: today-v;
+  }
+}
+
+@keyframes today-v {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+.strip[data-variant="row"] {
+  --cell: 5.75rem;
+}
+
+/* Compact: header strip */
+.strip[data-variant="compact"] {
+  --cell: 2.75rem;
+}
+
+.strip[data-variant="compact"] .track {
+  contain: none;
+}
+
+.strip[data-variant="compact"] .cell {
+  aspect-ratio: 1;
+  padding: 4px 5px;
+  grid-template-rows: auto 1fr;
+}
+
+.strip[data-variant="compact"] .code {
+  font-size: 0.5625rem;
+}
+
+.strip[data-variant="compact"] .food {
+  /* hidden on screen, kept as the link name */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.strip[data-variant="compact"] .mark {
+  align-self: end;
+}
+
+.strip[data-variant="compact"] .cell[data-latest]::after {
+  bottom: -6px;
+  height: 3px;
+}
+
+.strip[data-variant="compact"] .new {
+  display: none;
+}
+
+.strip[data-variant="row"] .track,
+.strip[data-variant="compact"] .track {
+  padding-bottom: 10px;
+}
