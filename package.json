@@ -1,0 +1,41 @@
+{
+  "name": "rich-anthill",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "pnpm validate && next build",
+    "start": "next start",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "validate": "node --experimental-strip-types scripts/validate-content.mts",
+    "plates": "node scripts/halftone.mjs",
+    "test": "vitest run",
+    "test:e2e": "playwright test"
+  },
+  "packageManager": "pnpm@12.6.0",
+  "dependencies": {
+    "motion": "14.3.0",
+    "next": "16.4.2",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "1.64.1",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "16.3.3",
+    "@types/node": "^22.20.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "16.4.2",
+    "jsdom": "^30.1.3",
+    "sharp": "0.35.5",
+    "typescript": "^5.9.3",
+    "vitest": "5.0.5"
+  },
+  "type": "module"
+}
