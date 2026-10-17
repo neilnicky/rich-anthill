@@ -1,0 +1,151 @@
+.opening {
+  min-height: calc(100svh - var(--header-h) - var(--bottom-nav-h));
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  padding-block: var(--s-7) var(--s-6);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: 1fr auto auto;
+  row-gap: var(--s-7);
+}
+
+.notice {
+  align-self: center;
+  display: grid;
+  justify-items: start;
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
+  container-type: inline-size;
+}
+
+.headline {
+  display: grid;
+  /* "OUTCOME UNKNOWN" is the longest line: ~11.6em wide at this width axis */
+  font-size: clamp(2.5rem, 14.6cqi, 6rem);
+  font-weight: 840;
+  font-variation-settings: "wdth" 118;
+  line-height: 0.88;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+@container (min-width: 640px) {
+  .headline {
+    font-size: clamp(2.75rem, 7.6cqi, 6rem);
+  }
+}
+
+.l1 {
+  color: var(--ink-umber);
+}
+
+.l2 {
+  color: var(--ink-umber);
+}
+
+.l3 {
+  color: var(--ink-chitin-display);
+}
+
+.rule {
+  width: 48px;
+  height: 6px;
+  margin-block: var(--s-6) var(--s-5);
+  background: var(--ink-umber);
+}
+
+.lead {
+  max-width: 40ch;
+  font-size: var(--t-lead);
+  font-weight: 500;
+  line-height: 1.42;
+}
+
+.status {
+  margin-top: var(--s-4);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  margin-top: var(--s-6);
+}
+
+.primary,
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 3.25rem;
+  padding: 0 var(--s-5);
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    background-color var(--m-press) var(--ease-print),
+    transform var(--m-press) var(--ease-press);
+}
+
+.primary {
+  background: var(--ink-umber);
+  color: var(--board);
+  border: var(--rule);
+}
+
+.secondary {
+  border: var(--rule);
+}
+
+.primary:active,
+.secondary:active {
+  transform: translateY(1px);
+}
+
+@media (hover: hover) {
+  .secondary:hover {
+    background: var(--board-deep);
+  }
+  .primary:hover {
+    background: var(--ink-chitin);
+    border-color: var(--ink-chitin);
+  }
+}
+
+.column {
+  min-width: 0;
+}
+
+.slug {
+  padding-top: var(--s-4);
+  border-top: var(--hairline);
+}
+
+@media (max-width: 599.98px) {
+  .grid {
+    row-gap: var(--s-6);
+  }
+  .opening {
+    padding-top: var(--s-6);
+  }
+  .actions > * {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+}
+
+@media (min-width: 1200px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr) 20rem;
+    column-gap: var(--s-8);
+    grid-template-rows: 1fr auto;
+  }
+  .column {
+    align-self: center;
+  }
+  .slug {
+    grid-column: 1 / -1;
+  }
+}

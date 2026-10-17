@@ -1,0 +1,158 @@
+.scene {
+  padding-bottom: var(--s-9);
+}
+
+.opening {
+  position: relative;
+  margin-bottom: var(--s-9);
+}
+
+.plate {
+  clip-path: inset(0 0 0 0);
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .plate > div:first-child {
+      animation: open linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 40%;
+    }
+  }
+}
+
+/* The camera opens: the frame widens from a letterbox to the full plate */
+@keyframes open {
+  from {
+    clip-path: inset(18% 12% 18% 12%);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.titleWrap {
+  position: relative;
+  margin-top: calc(-1 * var(--s-8));
+  display: grid;
+  gap: var(--s-5);
+}
+
+.title {
+  justify-self: start;
+  padding: var(--s-3) var(--s-4) var(--s-2) 0;
+  background: var(--board);
+  font-size: var(--t-display);
+  text-transform: uppercase;
+  font-weight: 830;
+  font-variation-settings: "wdth" 118;
+}
+
+.intro {
+  max-width: 46ch;
+  font-size: var(--t-lead);
+  line-height: 1.45;
+}
+
+.panel {
+  display: grid;
+  gap: var(--s-6);
+  padding-block: var(--s-8);
+  border-top: var(--rule);
+}
+
+.text {
+  display: grid;
+  gap: var(--s-4);
+  align-content: start;
+  justify-items: start;
+  max-width: var(--measure);
+}
+
+.h3 {
+  font-size: var(--t-title);
+  text-transform: uppercase;
+  font-weight: 800;
+  font-variation-settings: "wdth" 112;
+  margin-bottom: var(--s-1);
+}
+
+.figure {
+  display: grid;
+  gap: var(--s-2);
+  max-width: 28rem;
+  padding: var(--s-5);
+  border: var(--rule);
+  background: var(--paper);
+}
+
+.cap {
+  font-size: var(--t-caption);
+  border-top: var(--hairline);
+  padding-top: var(--s-2);
+}
+
+.compare {
+  display: grid;
+  gap: 0;
+  align-content: start;
+}
+
+.ticket {
+  display: grid;
+  gap: var(--s-2);
+  padding: var(--s-4) var(--s-5);
+  border: var(--rule);
+  background: var(--paper);
+}
+
+.ticket + .ticket {
+  margin-top: -1.5px;
+}
+
+.tHead {
+  font-family: var(--f-num);
+  font-size: 0.8125rem;
+  font-variation-settings: "wdth" 87;
+}
+
+.tBody {
+  font-family: var(--f-display);
+  font-weight: 760;
+  font-variation-settings: "wdth" 104;
+  font-size: 1.25rem;
+  line-height: 1.1;
+}
+
+.tRef {
+  font-family: var(--f-num);
+  font-size: 0.75rem;
+  font-variation-settings: "wdth" 87;
+  color: var(--fleck-text);
+}
+
+.open {
+  border: var(--rule-empty);
+  background: transparent;
+  justify-items: start;
+}
+
+.warning .h3 {
+  color: var(--ink-chitin-display);
+}
+
+@media (min-width: 900px) {
+  .titleWrap {
+    margin-top: calc(-1 * var(--s-9));
+  }
+  .panel {
+    grid-template-columns: 7fr 5fr;
+    column-gap: var(--s-8);
+    align-items: start;
+  }
+  .figure,
+  .compare {
+    position: sticky;
+    top: calc(var(--header-h) + var(--s-6));
+  }
+}
