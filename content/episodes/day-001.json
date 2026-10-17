@@ -1,0 +1,23 @@
+{
+  "day": 1,
+  "date": "2026-10-14",
+  "title": "The Service opens an account",
+  "reel": {
+    "shortcode": "Deewk4GuUZa",
+    "url": "https://www.instagram.com/rich_anthill/reel/Deewk4GuUZa/",
+    "status": "available",
+    "audio": "Ant",
+    "hashtags": ["#ant", "#wealth", "#lucky", "#feeding", "#animals"]
+  },
+  "issued": {
+    "value": { "food": "sugar", "label": "Sugar" },
+    "status": "reported",
+    "by": "project-owner",
+    "note": "The project owner watched the reel: the creator says the colony will get sugar from now on. Exact words and quantity still to be checked."
+  },
+  "summary": "The first delivery. The creator announces a daily ration of sugar for one wild anthill and starts counting days.",
+  "observations": [],
+  "measurements": [],
+  "science": ["S1", "S3", "S7"],
+  "related": [{ "day": 3, "reason": "The ration changes from sugar to protein" }]
+}

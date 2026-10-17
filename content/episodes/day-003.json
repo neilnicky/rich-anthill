@@ -1,0 +1,23 @@
+{
+  "day": 3,
+  "date": "2026-10-16",
+  "title": "Protein arrives",
+  "reel": {
+    "shortcode": "DekBUZKs3S4",
+    "url": "https://www.instagram.com/rich_anthill/reel/DekBUZKs3S4/",
+    "status": "available",
+    "audio": "Original audio",
+    "hashtags": ["#day3", "#ant", "#wealth", "#lucky", "#feeding"]
+  },
+  "issued": {
+    "value": { "food": "protein", "label": "Whey protein" },
+    "status": "reported",
+    "by": "project-owner",
+    "note": "The project owner watched the reel: the creator gives the colony whey protein. Quantity and form still to be checked."
+  },
+  "summary": "Two days after promising sugar, the Service brings whey protein. Ant colonies handle protein in a different way from sugar.",
+  "observations": [],
+  "measurements": [],
+  "science": ["S7", "S8"],
+  "related": [{ "day": 1, "reason": "The ration started as sugar" }]
+}
