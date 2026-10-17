@@ -1,0 +1,253 @@
+.page {
+  padding-top: var(--s-7);
+}
+
+.head {
+  display: grid;
+  gap: var(--s-4);
+  padding-bottom: var(--s-7);
+}
+
+.code {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--s-2) var(--s-5);
+  font-family: var(--f-num);
+  font-variation-settings: "wdth" 87;
+  font-weight: 500;
+  font-size: var(--t-data-l);
+  line-height: 1;
+}
+
+.date {
+  font-family: var(--f-text);
+}
+
+.title {
+  font-size: var(--t-display);
+  text-transform: uppercase;
+  font-weight: 840;
+  font-variation-settings: "wdth" 116;
+  max-width: 18ch;
+}
+
+.summary {
+  max-width: 50ch;
+  font-size: var(--t-lead);
+  line-height: 1.45;
+}
+
+.grid {
+  display: grid;
+  gap: var(--s-7);
+  padding-block: var(--s-7);
+  border-top: var(--rule);
+}
+
+.record {
+  display: grid;
+  align-content: start;
+}
+
+.block {
+  display: grid;
+  gap: var(--s-3);
+  justify-items: start;
+  padding-block: var(--s-5);
+  border-bottom: var(--hairline);
+}
+
+.block:first-child {
+  padding-top: 0;
+}
+
+.h2 {
+  font-family: var(--f-num);
+  font-weight: 450;
+  font-variation-settings: "wdth" 87;
+  font-size: 0.8125rem;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.issued {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  font-family: var(--f-display);
+  font-weight: 840;
+  font-variation-settings: "wdth" 118;
+  text-transform: uppercase;
+  font-size: clamp(2rem, 1.4rem + 2.6vw, 3.5rem);
+  line-height: 0.95;
+}
+
+.issued[data-status="reported"] .mark {
+  color: var(--ink-chitin-display);
+}
+
+.issued[data-status="unknown"] .mark {
+  color: var(--fleck);
+}
+
+.note {
+  max-width: 52ch;
+  font-size: var(--t-annot);
+  padding-left: var(--s-3);
+  border-left: 1px solid var(--fleck);
+}
+
+.empty {
+  max-width: 48ch;
+  padding: var(--s-3) var(--s-4);
+  border: var(--rule-empty);
+  font-size: var(--t-annot);
+}
+
+.obs,
+.context {
+  padding-left: 1.1em;
+  display: grid;
+  gap: var(--s-3);
+  max-width: var(--measure);
+}
+
+.measures {
+  border-collapse: collapse;
+  font-size: var(--t-annot);
+}
+
+.measures th,
+.measures td {
+  padding: var(--s-2) var(--s-3);
+  border-bottom: var(--hairline);
+  text-align: left;
+}
+
+.related {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: var(--s-2);
+}
+
+.relLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  min-height: 2.75rem;
+  padding: 0 var(--s-4);
+  border: var(--rule);
+  text-decoration: none;
+  font-weight: 560;
+}
+
+.relCode {
+  font-family: var(--f-num);
+  font-variation-settings: "wdth" 87;
+  font-size: var(--t-data);
+}
+
+@media (hover: hover) {
+  .relLink:hover {
+    background: var(--board-deep);
+  }
+}
+
+.pager {
+  display: grid;
+  gap: var(--s-3);
+  padding-block: var(--s-7) var(--s-5);
+  border-top: var(--rule);
+}
+
+.ticket {
+  display: grid;
+  gap: var(--s-2);
+  padding: var(--s-5);
+  border: var(--rule);
+  background: var(--paper);
+  text-decoration: none;
+  min-height: 9rem;
+  align-content: start;
+  transition: background-color var(--m-press) var(--ease-print);
+}
+
+@media (hover: hover) {
+  a.ticket:hover {
+    background: var(--board-deep);
+  }
+}
+
+.blank {
+  background: transparent;
+  border: var(--rule-empty);
+  color: var(--fleck-text);
+}
+
+.dir {
+  font-weight: 600;
+  font-size: var(--t-annot);
+}
+
+.tCode {
+  font-family: var(--f-num);
+  font-variation-settings: "wdth" 87;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.tTitle {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-variation-settings: "wdth" 110;
+  text-transform: uppercase;
+  font-size: 1.25rem;
+  line-height: 1.05;
+}
+
+.hint {
+  display: none;
+  font-size: var(--t-caption);
+}
+
+.hint kbd {
+  font-family: var(--f-num);
+  padding: 0 0.35em;
+  border: 1px solid var(--fleck);
+}
+
+.strip {
+  padding-block: var(--s-5) 0;
+}
+
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: 5fr 7fr;
+    column-gap: var(--s-8);
+  }
+  .reel {
+    position: sticky;
+    top: calc(var(--header-h) + var(--s-5));
+    align-self: start;
+  }
+  .pager {
+    grid-template-columns: 1fr 1fr;
+    column-gap: var(--gutter);
+  }
+  .right {
+    text-align: right;
+    justify-items: end;
+  }
+  .hint {
+    display: block;
+    grid-column: 1 / -1;
+  }
+}
+
+@media (hover: none) {
+  .hint {
+    display: none;
+  }
+}
