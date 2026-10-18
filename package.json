@@ -10,11 +10,12 @@
     "typecheck": "tsc --noEmit",
     "validate": "node --experimental-strip-types scripts/validate-content.mts",
     "plates": "node scripts/halftone.mjs",
+    "fonts:og": "node scripts/embed-og-fonts.mjs",
     "test": "vitest run",
     "test:e2e": "playwright test",
     "cf:deploy": "wrangler deploy",
     "cf:preview": "pnpm build && opennextjs-cloudflare preview",
-    "build:next": "pnpm validate && next build"
+    "build:next": "pnpm validate && pnpm fonts:og && next build"
   },
   "packageManager": "pnpm@12.6.0",
   "dependencies": {
