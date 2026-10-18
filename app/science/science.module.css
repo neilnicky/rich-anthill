@@ -1,74 +1,120 @@
+/* The science reads like a journal page laid on the bench beside the specimen */
 .head {
   display: grid;
+  gap: var(--s-6);
+  padding: var(--s-8) var(--margin) var(--s-8);
+  max-width: calc(var(--content-max) + 2 * var(--margin));
+  margin-inline: auto;
+}
+
+.headText {
+  display: grid;
   gap: var(--s-5);
-  padding-block: var(--s-8) var(--s-8);
+  align-content: end;
 }
 
 .title {
-  font-size: var(--t-display);
-  text-transform: uppercase;
-  font-weight: 840;
-  font-variation-settings: "wdth" 118;
-  max-width: 16ch;
+  font-size: var(--t-hero);
+  font-weight: 300;
+  letter-spacing: -0.035em;
+  max-width: 12ch;
 }
 
 .intro {
-  max-width: 50ch;
+  max-width: 42ch;
+  font-family: var(--f-narr);
   font-size: var(--t-lead);
   line-height: 1.45;
+  color: var(--bone-2);
+}
+
+.headFrame {
+  aspect-ratio: 1;
+  width: 100%;
+}
+
+@media (min-width: 900px) {
+  .head {
+    grid-template-columns: 7fr 5fr;
+    gap: var(--s-8);
+    align-items: end;
+    padding-top: var(--s-9);
+  }
+}
+
+/* The paper: everything after the header */
+.paper {
+  padding-bottom: var(--s-9);
+}
+
+.paper > section {
+  padding-block: var(--s-8);
+  border-top: 1px solid var(--line-ash);
+}
+
+.paper > section:first-child {
+  border-top: 0;
 }
 
 .h2 {
   font-size: var(--t-title);
-  text-transform: uppercase;
-  font-weight: 820;
-  font-variation-settings: "wdth" 114;
+  font-weight: 340;
+  letter-spacing: -0.02em;
 }
 
 .lede {
+  font-family: var(--f-narr);
   font-size: var(--t-lead);
   line-height: 1.45;
+  color: var(--ink-2);
   max-width: 44ch;
 }
 
+/* Four kinds of statement */
 .kinds {
-  padding-block: var(--s-8);
-  border-top: var(--rule);
+  display: grid;
+  gap: var(--s-6);
 }
 
 .kindList {
   display: grid;
-  margin-top: var(--s-6);
+  gap: var(--s-5);
 }
 
 .kind {
   display: grid;
-  gap: var(--s-3);
-  padding-block: var(--s-5);
-  border-top: var(--hairline);
+  gap: var(--s-2);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--ink);
 }
 
 .kind dt {
-  font-family: var(--f-display);
-  font-weight: 840;
-  font-variation-settings: "wdth" 118;
-  text-transform: uppercase;
-  font-size: clamp(1.75rem, 1.2rem + 2.2vw, 3rem);
-  line-height: 1;
+  font-family: var(--f-narr);
+  font-size: 2rem;
+  font-weight: 340;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
 }
 
 .kind dd {
   display: grid;
   gap: var(--s-2);
   justify-items: start;
-  max-width: 44ch;
+  color: var(--ink-2);
+  max-width: 34ch;
 }
 
+@media (min-width: 900px) {
+  .kindList {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--s-6);
+  }
+}
+
+/* Topics */
 .topic {
   display: grid;
   gap: var(--s-6);
-  padding-block: var(--s-8);
-  border-top: var(--rule);
 }
 
 .topicHead {
@@ -87,51 +133,72 @@
   display: grid;
   gap: var(--s-2);
   padding-block: var(--s-5);
-  border-bottom: var(--hairline);
+  border-top: 1px solid var(--line-ash);
 }
 
 .finding:first-child {
-  padding-top: 0;
+  border-top-color: var(--ink);
 }
 
 .fMeta {
-  font-family: var(--f-num);
-  font-variation-settings: "wdth" 87;
-  font-size: 0.8125rem;
+  font-family: var(--f-data);
+  font-size: var(--t-data);
+  color: var(--ink-3);
 }
 
 .fText {
-  font-size: var(--t-lead);
-  line-height: 1.42;
-  font-weight: 500;
-  max-width: var(--measure);
+  font-family: var(--f-narr);
+  font-size: var(--t-read);
+  line-height: 1.55;
+  max-width: 58ch;
 }
 
 .fLimits {
-  color: var(--ink-chitin);
-  font-weight: 560;
-  font-size: var(--t-annot);
+  font-size: var(--t-small);
+  color: var(--ant-ash);
+  max-width: 58ch;
 }
 
+@media (min-width: 900px) {
+  .topic {
+    grid-template-columns: 4fr 8fr;
+    column-gap: var(--s-8);
+  }
+}
+
+/* What is measured */
 .measures {
   display: grid;
-  gap: var(--s-7);
-  padding-block: var(--s-8);
-  border-top: var(--rule);
+  gap: var(--s-6);
 }
 
 .measures > div {
   display: grid;
   gap: var(--s-4);
   align-content: start;
-  max-width: var(--measure);
+  max-width: 58ch;
+  font-family: var(--f-narr);
+  font-size: var(--t-read);
+  line-height: 1.6;
 }
 
+.measureFrame {
+  aspect-ratio: 4 / 3;
+  width: 100%;
+}
+
+@media (min-width: 900px) {
+  .measures {
+    grid-template-columns: 7fr 5fr;
+    column-gap: var(--s-8);
+    align-items: start;
+  }
+}
+
+/* Sources */
 .sources {
   display: grid;
   gap: var(--s-4);
-  padding-block: var(--s-8) 0;
-  border-top: var(--rule);
 }
 
 .refs {
@@ -139,46 +206,27 @@
   padding: 0;
   margin-top: var(--s-4);
   display: grid;
-  border-top: var(--hairline);
+  border-top: 1px solid var(--ink);
 }
 
 .ref {
   display: grid;
-  grid-template-columns: 3rem 1fr;
+  grid-template-columns: 3rem minmax(0, 1fr);
   gap: var(--s-3);
   padding-block: var(--s-4);
-  border-bottom: var(--hairline);
-  font-size: var(--t-annot);
+  border-bottom: 1px solid var(--line-ash);
+  font-size: var(--t-small);
+  line-height: 1.55;
   overflow-wrap: anywhere;
   scroll-margin-top: calc(var(--header-h) + var(--s-5));
 }
 
 .ref:target {
-  background: var(--paper);
-  outline: var(--rule);
+  background: var(--ash-2);
 }
 
 .refId {
-  font-family: var(--f-num);
-  font-variation-settings: "wdth" 87;
-}
-
-@media (min-width: 900px) {
-  .kindList {
-    grid-template-columns: 1fr 1fr;
-    column-gap: var(--gutter);
-  }
-  .topic {
-    grid-template-columns: 4fr 8fr;
-    column-gap: var(--gutter);
-  }
-  .topicHead {
-    position: sticky;
-    top: calc(var(--header-h) + var(--s-6));
-    align-self: start;
-  }
-  .measures {
-    grid-template-columns: 7fr 5fr;
-    column-gap: var(--s-8);
-  }
+  font-family: var(--f-data);
+  font-size: var(--t-data);
+  color: var(--ink-3);
 }

@@ -1,3 +1,5 @@
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { checkEpisodes, episodeSchema, type Episode } from "@/lib/schema";
 import { episodes } from "@/lib/episodes";
@@ -81,6 +83,17 @@ describe("media", () => {
       expect(m.role).toBe("stand-in");
       expect(m.licence).toBeUndefined();
       expect(m.alt.length).toBeGreaterThan(20);
+    }
+  });
+
+  it("has every declared photo width built on disk", () => {
+    for (const m of Object.values(media)) {
+      const base = join(process.cwd(), "public", m.photo);
+      for (const w of m.widths) {
+        expect(existsSync(`${base}-${w}.avif`), `${m.id} ${w} avif`).toBe(true);
+        expect(existsSync(`${base}-${w}.webp`), `${m.id} ${w} webp`).toBe(true);
+      }
+      expect(existsSync(`${base}-soft.webp`), `${m.id} soft`).toBe(true);
     }
   });
 });

@@ -1,42 +1,69 @@
+/* A reference mark in the margin of the narration. Works on soil and on ash sheets. */
 .chip {
+  --chip-ink: var(--bone-2);
+  --chip-hi: var(--bone);
+  --chip-ground: var(--soil);
+  --chip-panel: var(--soil-2);
+  --chip-line: var(--line);
+  --chip-limit: var(--ant);
   display: inline-block;
-  margin-inline: 0.2em 0.1em;
-  padding: 0 0.35em;
-  border: 1.5px solid currentColor;
-  font-family: var(--f-num);
-  font-size: 0.75em;
-  font-variation-settings: "wdth" 87;
-  line-height: 1.45;
-  vertical-align: 0.12em;
-  transition: background-color var(--m-press) var(--ease-print);
+  margin-inline: 0.25em 0.1em;
+  padding: 0.05em 0.4em 0.1em;
+  border: 1px solid currentColor;
+  border-radius: 1em;
+  color: var(--chip-ink);
+  font-family: var(--f-data);
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  vertical-align: 0.25em;
+  transition:
+    background-color var(--m-press) ease,
+    color var(--m-press) ease;
+}
+
+:global(.sheet) .chip,
+:global(.sheet) .panel {
+  --chip-ink: var(--ink-2);
+  --chip-hi: var(--ink);
+  --chip-ground: var(--ash);
+  --chip-panel: var(--ash-2);
+  --chip-line: var(--line-ash);
+  --chip-limit: var(--ant-ash);
 }
 
 .chip[aria-expanded="true"] {
-  background: var(--ink-umber);
-  color: var(--board);
-  border-color: var(--ink-umber);
+  background: var(--chip-hi);
+  border-color: var(--chip-hi);
+  color: var(--chip-ground);
 }
 
 @media (hover: hover) {
   .chip:hover {
-    background: var(--board-deep);
+    color: var(--chip-hi);
   }
   .chip[aria-expanded="true"]:hover {
-    background: var(--ink-umber);
+    color: var(--chip-ground);
   }
 }
 
 .panel {
+  --chip-ink: var(--bone-2);
+  --chip-hi: var(--bone);
+  --chip-panel: var(--soil-2);
+  --chip-line: var(--line);
+  --chip-limit: var(--ant);
   display: grid;
   gap: var(--s-2);
   margin-block: var(--s-3) var(--s-2);
   padding: var(--s-3) var(--s-4);
-  border: var(--rule);
-  background: var(--paper);
-  font-size: var(--t-annot);
-  line-height: 1.45;
+  border-left: 1px solid var(--chip-hi);
+  background: var(--chip-panel);
+  color: var(--chip-hi);
+  font-family: var(--f-text);
+  font-size: var(--t-small);
+  line-height: 1.5;
   font-weight: 400;
-  color: var(--ink-umber);
+  letter-spacing: 0;
   text-align: left;
 }
 
@@ -45,20 +72,21 @@
 }
 
 .meta {
-  font-family: var(--f-num);
-  font-size: 0.75rem;
-  font-variation-settings: "wdth" 87;
+  font-family: var(--f-data);
+  font-size: var(--t-data-s);
+  color: var(--chip-ink);
 }
 
 .finding {
-  font-weight: 560;
+  font-weight: 500;
 }
 
 .limits {
-  color: var(--ink-chitin);
+  color: var(--chip-limit);
 }
 
 .ref {
-  font-size: var(--t-caption);
+  font-size: 0.8125rem;
+  color: var(--chip-ink);
   overflow-wrap: anywhere;
 }

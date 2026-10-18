@@ -1,40 +1,28 @@
+:where(.reg) {
+  display: inline-block;
+}
+
 .reg {
-  display: inline-grid;
+  position: relative;
   isolation: isolate;
 }
 
-.ghost,
-.ink {
-  grid-area: 1 / 1;
-}
-
-.ghost {
-  color: var(--ink-chitin-display);
-  transform: translate(var(--gx, 0), var(--gy, 0));
-  user-select: none;
+/* A lens a touch off: a faint, slightly offset second image, not a glow */
+.reg[data-soft]::before {
+  content: attr(data-soft);
+  position: absolute;
+  inset: 0;
+  color: inherit;
+  filter: blur(0.03em);
+  opacity: 0.36;
+  transform: translate(0.05em, 0.03em);
+  z-index: -1;
   pointer-events: none;
+  user-select: none;
 }
 
-.ink {
-  mix-blend-mode: multiply;
-}
-
-@media (prefers-color-scheme: dark) {
-  .ink {
-    mix-blend-mode: normal;
-  }
-}
-
-.reg[data-state="reported"] {
-  --gx: var(--reg-reported-x);
-  --gy: var(--reg-reported-y);
-}
-
-.reg[data-state="hypothesis"] {
-  --gx: var(--reg-hyp-x);
-  --gy: var(--reg-hyp-y);
-}
-
-.reg[data-state="confirmed"] .ink {
-  color: var(--ink-moss-display);
+.reg[data-state="hypothesis"][data-soft]::before {
+  filter: blur(0.045em);
+  opacity: 0.42;
+  transform: translate(0.09em, 0.045em);
 }

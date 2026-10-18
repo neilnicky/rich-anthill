@@ -1,19 +1,20 @@
+/* The days as film frames. Variants: hero (over footage), row (closing), compact (header). */
 .strip {
-  --cell: 4.75rem;
+  --cell: 5.25rem;
+  --cell-h: 6.5rem;
   min-width: 0;
 }
 
 .track {
+  display: flex;
+  gap: 6px;
   list-style: none;
   padding: 0;
-  /* Never let the row widen its container; it scrolls inside its own track instead */
-  contain: inline-size;
-  display: flex;
-  gap: 0;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   overscroll-behavior-x: contain;
+  contain: inline-size;
 }
 
 .track::-webkit-scrollbar {
@@ -25,189 +26,150 @@
   scroll-snap-align: start;
 }
 
-/* Cells share borders so the row reads as one printed strip */
-.item + .item .cell {
-  margin-left: -1.5px;
-}
-
 .cell {
   position: relative;
   display: grid;
   grid-template-rows: auto 1fr auto;
   width: var(--cell);
-  aspect-ratio: 4 / 5;
-  padding: var(--s-2);
-  border: var(--rule);
-  background: var(--paper);
-  color: var(--ink-umber);
+  height: var(--cell-h);
+  padding: 8px 9px 9px;
+  border: 1px solid color-mix(in srgb, var(--bone) 55%, transparent);
+  background: color-mix(in srgb, var(--soil) 72%, transparent);
+  color: var(--bone);
   text-decoration: none;
-  transition: background-color var(--m-press) var(--ease-print);
+  transition:
+    background-color var(--m-shift) var(--ease-out),
+    border-color var(--m-shift) var(--ease-out);
 }
 
-.cell[data-empty] {
-  border: var(--rule-empty);
-  background: transparent;
-  color: var(--fleck-text);
+a.cell:hover {
+  background: color-mix(in srgb, var(--soil-3) 92%, transparent);
+  border-color: var(--bone);
 }
 
 .code {
-  white-space: nowrap;
-  font-family: var(--f-num);
-  font-size: 0.6875rem;
-  font-variation-settings: "wdth" 87;
-  letter-spacing: 0;
+  font-family: var(--f-data);
+  font-size: var(--t-data-s);
   line-height: 1;
+  color: var(--bone-2);
+  white-space: nowrap;
 }
 
 .mark {
   align-self: center;
-  justify-self: start;
-  transition: transform var(--m-shift) var(--ease-print);
+  color: var(--bone);
 }
 
 .cell[data-status="reported"] .mark {
-  color: var(--ink-chitin-display);
+  color: var(--ant);
 }
 
 .cell[data-status="confirmed"] .mark {
-  color: var(--ink-moss-display);
+  color: var(--lichen);
 }
 
 .food {
-  font-size: 0.75rem;
-  font-weight: 560;
-  line-height: 1.15;
-  hyphens: auto;
-  overflow-wrap: break-word;
+  font-size: 0.6875rem;
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+.cell[data-empty] {
+  border: 1px dashed color-mix(in srgb, var(--bone) 40%, transparent);
+  background: transparent;
+  grid-template-rows: auto 1fr;
 }
 
 .cell[data-empty] .food {
-  grid-column: 2 / -1;
+  align-self: end;
+  color: var(--bone-2);
 }
 
-/* The today light */
-.cell[data-latest]::after {
+/* The tally light: lit on the latest day */
+.cell[data-latest]::before {
   content: "";
   position: absolute;
-  left: -1.5px;
-  right: -1.5px;
-  bottom: -9px;
-  height: 5px;
-  background: var(--ink-chitin-display);
-  transform-origin: left;
-  animation: today 480ms var(--ease-print) 300ms both;
+  top: 8px;
+  right: 9px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ant);
 }
 
-@keyframes today {
-  from {
-    transform: scaleX(0);
-  }
+.cell[aria-current="page"] {
+  border-color: var(--bone);
+  box-shadow: inset 0 0 0 1px var(--bone);
 }
 
 .new {
   position: absolute;
-  top: -1.5px;
-  right: -1.5px;
+  left: -1px;
+  bottom: calc(100% + 4px);
   padding: 1px 5px 2px;
-  background: var(--ink-chitin);
-  color: var(--board);
-  font-size: 0.6875rem;
-  font-weight: 600;
-  line-height: 1.2;
+  background: var(--ant);
+  color: var(--soil);
+  font-family: var(--f-data);
+  font-size: 0.625rem;
+  line-height: 1.3;
 }
 
-@media (hover: hover) {
-  a.cell:hover {
-    background: var(--board-deep);
+.strip[data-variant="hero"] .track,
+.strip[data-variant="row"] .track {
+  padding-top: 20px;
+}
+
+@media (min-width: 900px) {
+  .strip[data-variant="hero"] {
+    --cell: 6rem;
+    --cell-h: 7.25rem;
   }
-  a.cell:hover .mark {
-    transform: translate(1px, -1px);
-  }
-}
-
-a.cell:active {
-  background: var(--board-deep);
-}
-
-a.cell:focus-visible {
-  z-index: 1;
-}
-
-/* Hero: larger cells; on wide screens the strip stands as a kiosk column */
-.strip[data-variant="hero"] {
-  --cell: clamp(4.5rem, 3.6rem + 4vw, 6.25rem);
-  padding-bottom: 12px;
-}
-
-.strip[data-variant="hero"] .code {
-  font-size: 0.75rem;
-}
-
-.strip[data-variant="hero"] .food {
-  font-size: 0.8125rem;
-}
-
-@media (min-width: 1200px) {
+  /* Beside the headline the strip sizes itself; it never forces the page wide here */
   .strip[data-variant="hero"] .track {
-    flex-direction: column;
-    overflow: visible;
     contain: none;
   }
-  .strip[data-variant="hero"] .item + .item .cell {
-    margin-left: 0;
-    margin-top: -1.5px;
-  }
-  .strip[data-variant="hero"] .cell {
-    width: 100%;
-    aspect-ratio: auto;
-    min-height: 4.5rem;
-    grid-template-columns: 5.5rem 2.5rem 1fr;
-    grid-template-rows: 1fr;
-    align-items: center;
-    padding: var(--s-3) var(--s-4);
-  }
-  .strip[data-variant="hero"] .food {
-    font-size: var(--t-annot);
-  }
-  .strip[data-variant="hero"] .cell[data-latest]::after {
-    left: auto;
-    top: -1.5px;
-    bottom: -1.5px;
-    right: -11px;
-    width: 6px;
-    height: auto;
-    transform-origin: top;
-    animation-name: today-v;
-  }
 }
 
-@keyframes today-v {
-  from {
-    transform: scaleY(0);
-  }
-}
-
-.strip[data-variant="row"] {
-  --cell: 5.75rem;
-}
-
-/* Compact: header strip */
+/* Compact: header strip, from 1200px */
 .strip[data-variant="compact"] {
-  --cell: 2.75rem;
+  --cell: 2.5rem;
+  --cell-h: 2.75rem;
 }
 
 .strip[data-variant="compact"] .track {
+  gap: 3px;
   contain: none;
 }
 
 .strip[data-variant="compact"] .cell {
-  aspect-ratio: 1;
-  padding: 4px 5px;
   grid-template-rows: auto 1fr;
+  padding: 4px 5px;
+  border-color: var(--line);
+  background: transparent;
+}
+
+.strip[data-variant="compact"] a.cell:hover {
+  border-color: var(--bone-3);
+  background: var(--soil-2);
 }
 
 .strip[data-variant="compact"] .code {
   font-size: 0.5625rem;
+}
+
+.strip[data-variant="compact"] .codeWord {
+  display: none;
+}
+
+.strip[data-variant="compact"] .mark {
+  align-self: end;
+}
+
+.strip[data-variant="compact"] .cell[data-latest]::before {
+  top: 4px;
+  right: 4px;
+  width: 5px;
+  height: 5px;
 }
 
 .strip[data-variant="compact"] .food {
@@ -221,20 +183,10 @@ a.cell:focus-visible {
   white-space: nowrap;
 }
 
-.strip[data-variant="compact"] .mark {
-  align-self: end;
-}
-
-.strip[data-variant="compact"] .cell[data-latest]::after {
-  bottom: -6px;
-  height: 3px;
-}
-
 .strip[data-variant="compact"] .new {
   display: none;
 }
 
-.strip[data-variant="row"] .track,
-.strip[data-variant="compact"] .track {
-  padding-bottom: 10px;
+.strip[data-variant="compact"] .cell[data-empty] {
+  border-color: var(--line);
 }

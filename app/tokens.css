@@ -1,35 +1,53 @@
-/* Rich Anthill · design tokens */
+/* Rich Anthill · design tokens. World: a nature documentary shot at ant height.
+   Footage sits on soil; reading passages slide over it on ash sheets. Source: docs/03-design-system.md */
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
 
-  /* Board and inks, sampled from the stand-in photographs */
-  --board: #d4d0c6;
-  --board-deep: #c4bfb3;
-  --paper: #e4e1d9;
-  --ink-umber: #2b2219;
-  --ink-moss: #435419;
-  --ink-moss-display: #4c5f1e;
-  --ink-chitin: #933313;
-  --ink-chitin-display: #a33a17;
-  --fleck: #7a7368;
-  --fleck-text: #57514a; /* fleck for words: 5.0:1 on board */
-  --focus: var(--ink-chitin);
+  /* Grounds */
+  --soil: #17110c; /* the ground the footage sits on */
+  --soil-2: #221a13; /* raised soil: panels, frames */
+  --soil-3: #2e241b; /* hover on soil */
+  --ash: #e2e1da; /* reading sheet */
+  --ash-2: #d3d1c8; /* rules and raised areas on ash */
+
+  /* Ink on soil */
+  --bone: #ece6da;
+  --bone-2: #b3aa9c; /* secondary text, 8:1 */
+  --bone-3: #8a8174; /* tertiary text and rules, 4.9:1 */
+  --line: #3b3027; /* hairlines on soil */
+
+  /* Ink on ash */
+  --ink: #17110c;
+  --ink-2: #4d453d; /* 7:1 */
+  --ink-3: #5c544a; /* 5.7:1 */
+  --line-ash: #b9b6ab;
+
+  /* The one accent: the colour of the ants themselves */
+  --ant: #e0612b; /* on soil, 5.3:1 */
+  --ant-ash: #9a3510; /* on ash, 5.5:1 */
+
+  /* Certainty */
+  --lichen: #b7c48a; /* confirmed, on soil */
+  --lichen-ash: #465418; /* confirmed, on ash */
+
+  --focus: var(--ant);
 
   /* Type */
-  --f-display: var(--font-archivo), "Arial Narrow", sans-serif;
+  --f-narr: var(--font-literata), "Iowan Old Style", Georgia, serif;
   --f-text: var(--font-golos), system-ui, sans-serif;
-  --f-num: var(--font-martian), ui-monospace, monospace;
+  --f-data: var(--font-martian), ui-monospace, monospace;
 
-  --t-hero: clamp(2.875rem, 1.35rem + 6.1vw, 6rem);
-  --t-display: clamp(2.125rem, 1.4rem + 3vw, 4.25rem);
-  --t-title: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem);
-  --t-lead: clamp(1.1875rem, 1.05rem + 0.5vw, 1.4375rem);
-  --t-body: 1.0625rem;
-  --t-annot: 0.9375rem;
-  --t-caption: 0.8125rem;
-  --t-data: 0.875rem;
-  --t-data-l: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+  --t-hero: clamp(2.625rem, 1.4rem + 5.4vw, 6rem);
+  --t-display: clamp(2.125rem, 1.35rem + 3.3vw, 4.5rem);
+  --t-title: clamp(1.625rem, 1.25rem + 1.5vw, 2.625rem);
+  --t-narr: clamp(1.375rem, 1.1rem + 1.15vw, 2.125rem);
+  --t-lead: clamp(1.1875rem, 1.06rem + 0.5vw, 1.4375rem);
+  --t-read: 1.125rem; /* Literata reading text */
+  --t-body: 1rem; /* Golos UI text */
+  --t-small: 0.875rem;
+  --t-data: 0.8125rem;
+  --t-data-s: 0.6875rem;
 
   /* Space (4px base) */
   --s-1: 0.25rem;
@@ -45,72 +63,46 @@
   --s-11: 12rem;
 
   /* Grid */
-  --gutter: 16px;
   --margin: 16px;
-  --content-max: 1520px;
-  --measure: 62ch;
-
-  /* Rules */
-  --rule: 1.5px solid var(--ink-umber);
-  --rule-empty: 1.5px dashed var(--fleck);
-  --hairline: 1px solid var(--fleck);
+  --gutter: 16px;
+  --content-max: 1440px;
+  --measure: 64ch;
+  --tick: 18px; /* viewfinder corner tick length */
+  --frame-inset: 12px; /* viewfinder inset from the frame edge */
 
   /* Motion */
   --m-press: 120ms;
   --m-shift: 240ms;
-  --m-reveal: 480ms;
-  --ease-print: cubic-bezier(0.2, 0, 0, 1);
-  --ease-press: cubic-bezier(0.3, 0, 0.6, 1);
+  --m-reveal: 520ms;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 
-  /* Registration offsets: information, kept under reduced motion */
-  --reg-reported-x: 2px;
-  --reg-reported-y: -1px;
-  --reg-hyp-x: 4px;
-  --reg-hyp-y: -2px;
-
-  --scene-pad: var(--s-8);
-
-  --header-h: 64px;
+  --header-h: 56px;
   --bottom-nav-h: 0px;
 }
 
 @media (min-width: 600px) {
   :root {
     --margin: 24px;
+    --frame-inset: 18px;
   }
 }
 @media (min-width: 900px) {
   :root {
+    --margin: 40px;
     --gutter: 24px;
-    --margin: 32px;
-    --scene-pad: var(--s-10);
+    --tick: 24px;
+    --frame-inset: 24px;
+    --header-h: 64px;
   }
 }
-@media (min-width: 1200px) {
+@media (min-width: 1280px) {
   :root {
-    --margin: 48px;
+    --margin: 56px;
   }
 }
 @media (max-width: 899.98px) {
   :root {
-    --header-h: 56px;
     --bottom-nav-h: calc(60px + env(safe-area-inset-bottom));
-  }
-}
-
-/* Night print: same run, inks reversed onto umber board */
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-    --board: #1d1a16;
-    --board-deep: #29251f;
-    --paper: #24201b;
-    --ink-umber: #d4d0c6;
-    --ink-moss: #a9bd6a;
-    --ink-moss-display: #a9bd6a;
-    --ink-chitin: #e0724a;
-    --ink-chitin-display: #e0724a;
-    --fleck: #7a7368;
-    --fleck-text: #a39b8f;
   }
 }

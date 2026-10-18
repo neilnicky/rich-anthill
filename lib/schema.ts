@@ -82,7 +82,9 @@ export type Source = z.infer<typeof sourceSchema>;
 export const mediaSchema = z.object({
   id: z.string(),
   src: z.string(),
-  plate: z.string(),
+  /** Base path of the responsive set built by `pnpm photos`: {photo}-{width}.avif|webp and {photo}-soft.webp */
+  photo: z.string(),
+  widths: z.array(z.number().int()).min(1),
   width: z.number().int(),
   height: z.number().int(),
   alt: z.string().min(12),

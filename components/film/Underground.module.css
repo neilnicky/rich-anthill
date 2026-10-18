@@ -1,0 +1,296 @@
+/* The light drops: this passage sits on the deepest soil of the page. */
+.under {
+  --deep: #0f0b08;
+  background: var(--deep);
+  padding-bottom: var(--s-10);
+}
+
+/* Entry: the trail photo, darkening as the camera loses the ants into the ground */
+.entry {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-height: calc(100svh - var(--header-h));
+}
+
+.entryPhoto {
+  grid-area: 1 / 1;
+  position: relative;
+  overflow: clip;
+}
+
+.entryFrame {
+  position: absolute;
+  inset: 0;
+}
+
+.entryPhoto::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 30%, var(--deep) 90%);
+  pointer-events: none;
+}
+
+.entryText {
+  grid-area: 1 / 1;
+  position: relative;
+  z-index: 2;
+  align-self: end;
+  display: grid;
+  gap: var(--s-5);
+  justify-items: start;
+  padding-block: var(--s-10) var(--s-8);
+}
+
+.title {
+  font-size: var(--t-hero);
+  font-weight: 300;
+  letter-spacing: -0.035em;
+}
+
+.lead {
+  max-width: 40ch;
+  font-family: var(--f-narr);
+  font-size: var(--t-lead);
+  font-variation-settings: "opsz" 24;
+  line-height: 1.45;
+  color: var(--bone);
+}
+
+/* Beats: each finding holds on a full-bleed plate while its sheet slides over it */
+.beat {
+  --held-h: calc(100svh - var(--header-h) - var(--bottom-nav-h));
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.held {
+  grid-area: 1 / 1;
+  position: sticky;
+  top: var(--header-h);
+  height: var(--held-h);
+}
+
+.plate {
+  height: 100%;
+}
+
+/* Underground key: the plates sit under the deep soil, a step darker than the surface */
+.plate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: color-mix(in srgb, var(--deep) 30%, transparent);
+  pointer-events: none;
+}
+
+/* The grade: daylight stock pulled down into the soil's key (a static filter, never animated) */
+.plate img {
+  filter: saturate(0.5) brightness(0.72) sepia(0.18);
+}
+
+/* The stand-in super stays above the underground key */
+.plate figcaption {
+  z-index: 2;
+}
+
+/* Annotation drawn on the photograph: a ring on the ant and a leader to its label */
+.pin {
+  position: absolute;
+  z-index: 1;
+  width: 54px;
+  height: 54px;
+  margin: -27px 0 0 -27px;
+  border: 1px solid var(--bone);
+  border-radius: 50%;
+}
+
+/* The leader runs away from the sheet: left when the sheet is on the right, and the reverse */
+.pin::after {
+  content: "";
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  width: clamp(2.5rem, 6vw, 5rem);
+  height: 1px;
+  background: var(--bone);
+}
+
+.pinLabel {
+  position: absolute;
+  right: calc(100% + clamp(2.5rem, 6vw, 5rem) + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 3px 7px 4px;
+  background: color-mix(in srgb, var(--soil) 82%, transparent);
+  color: var(--bone);
+  font-family: var(--f-data);
+  font-size: var(--t-data-s);
+  white-space: nowrap;
+}
+
+.over {
+  grid-area: 1 / 1;
+  position: relative;
+  z-index: 2;
+  display: grid;
+  padding: calc(var(--held-h) * 0.72) var(--margin) calc(var(--held-h) * 0.32);
+}
+
+.sheet {
+  justify-self: end;
+  margin-top: 0;
+  width: min(100%, 31rem);
+  display: grid;
+  gap: var(--s-4);
+  justify-items: start;
+  padding: var(--s-6) var(--s-5);
+  font-family: var(--f-narr);
+  font-size: var(--t-read);
+  font-variation-settings: "opsz" 16;
+  line-height: 1.6;
+  color: var(--ink-2);
+  box-shadow: 0 24px 60px -20px rgb(0 0 0 / 0.6);
+}
+
+.h3 {
+  font-size: var(--t-title);
+  font-weight: 340;
+  color: var(--ink);
+}
+
+/* Beats alternate: the sheet left or right, arriving earlier or later */
+.beat[data-side="left"] .sheet {
+  justify-self: start;
+}
+
+.beat[data-side="left"] .over {
+  padding-top: calc(var(--held-h) * 0.5);
+}
+
+.beat[data-side="left"] .pin::after {
+  right: auto;
+  left: 100%;
+}
+
+.beat[data-side="left"] .pinLabel {
+  right: auto;
+  left: calc(100% + clamp(2.5rem, 6vw, 5rem) + 8px);
+}
+
+/* Without motion the plates do not hold: each sheet sits inside its own plate */
+@media (prefers-reduced-motion: reduce) {
+  .held {
+    position: relative;
+    top: 0;
+  }
+  .over,
+  .beat[data-side="left"] .over {
+    align-self: end;
+    padding-block: var(--s-8) calc(var(--frame-inset) + var(--s-8));
+  }
+}
+
+@media (min-width: 900px) {
+  .over {
+    padding-inline: calc(var(--margin) + var(--frame-inset));
+  }
+  .sheet {
+    padding: var(--s-7) var(--s-6);
+  }
+}
+
+/* Protein: three cases side by side, the wild colony left open */
+.protein {
+  display: grid;
+  gap: var(--s-5);
+  padding-top: var(--s-10);
+}
+
+.proteinTitle {
+  font-size: var(--t-display);
+  font-weight: 320;
+  letter-spacing: -0.03em;
+}
+
+.proteinLead {
+  max-width: 46ch;
+  font-family: var(--f-narr);
+  font-size: var(--t-lead);
+  line-height: 1.5;
+  color: var(--bone);
+}
+
+.compare {
+  display: grid;
+  margin-top: var(--s-5);
+  border-top: 1px solid var(--bone-3);
+}
+
+.case {
+  display: grid;
+  gap: var(--s-2);
+  align-content: start;
+  padding: var(--s-5) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.compare {
+  list-style: none;
+  padding: 0;
+}
+
+.caseText {
+  font-family: var(--f-narr);
+  font-size: var(--t-narr);
+  font-weight: 340;
+  line-height: 1.2;
+  max-width: 22ch;
+  margin-bottom: var(--s-2);
+}
+
+.unknownCase .caseText {
+  color: var(--bone-2);
+  font-style: italic;
+}
+
+@media (min-width: 900px) {
+  .compare {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .case {
+    padding: var(--s-6) var(--s-6) var(--s-6) 0;
+    border-bottom: 0;
+  }
+  .case + .case {
+    padding-left: var(--s-6);
+    border-left: 1px solid var(--line);
+  }
+  .unknownCase {
+    border-left-style: dashed !important;
+  }
+}
+
+/* ───────────── Enhanced: the light drop ───────────── */
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* The entry photo dims and drifts as it leaves: the camera loses the light */
+    .entryPhoto {
+      view-timeline: --entry block;
+    }
+    .entryFrame {
+      animation: dim linear both;
+      animation-timeline: --entry;
+      animation-range: exit 0% exit 90%;
+    }
+    @keyframes dim {
+      to {
+        opacity: 0.25;
+        transform: translateY(12%) scale(1.06);
+      }
+    }
+  }
+}

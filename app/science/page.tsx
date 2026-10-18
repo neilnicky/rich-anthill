@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { publishableSources } from "@/content/sources";
 import { media } from "@/content/media";
-import { HalftonePlate } from "@/components/media/HalftonePlate";
+import { Frame } from "@/components/media/Frame";
 import { StatusLabel } from "@/components/status/StatusLabel";
 import { Registration } from "@/components/status/Registration";
 import styles from "./science.module.css";
@@ -37,13 +37,23 @@ export default function SciencePage() {
   const byId = new Map(publishableSources.map((s) => [s.id, s]));
   return (
     <>
-      <header className={`wrap ${styles.head}`}>
-        <h1 className={styles.title}>The science, and its limits</h1>
-        <p className={styles.intro}>
-          Researchers have studied how ant colonies handle food for decades, mostly in the lab, mostly with other species.
-          Their findings explain what the reels might show. They cannot say what this colony will do.
-        </p>
+      <header className={styles.head}>
+        <div className={styles.headText}>
+          <h1 className={styles.title}>The science, and its limits</h1>
+          <p className={styles.intro}>
+            Researchers have studied how ant colonies handle food for decades, mostly in the lab, mostly with other
+            species. Their findings explain what the reels might show. They cannot say what this colony will do.
+          </p>
+        </div>
+        <Frame
+          media={media.specimen}
+          sizes="(min-width: 900px) 45vw, 100vw"
+          className={styles.headFrame}
+          caption="The detail a lab sees and a phone at an anthill cannot"
+        />
       </header>
+
+      <div className={`sheet ${styles.paper}`}>
 
       <section className={`wrap ${styles.kinds}`} aria-labelledby="kinds-title">
         <h2 id="kinds-title" className={styles.h2}>
@@ -74,7 +84,7 @@ export default function SciencePage() {
             </dt>
             <dd>
               <StatusLabel status="reported" />
-              Someone who watched the reel says so. Printed off register until checked.
+              Someone who watched the reel says so. Shown slightly out of focus until checked.
             </dd>
           </div>
           <div className={styles.kind}>
@@ -126,21 +136,22 @@ export default function SciencePage() {
           <h2 id="measures-title" className={styles.h2}>
             What the experiment measures
           </h2>
-          <p className={styles.lede}>Today: nothing. The reels are short videos, not records.</p>
+          <p className={styles.lede}>So far: nothing. The reels are short videos, not records.</p>
           <p>
             To turn the series into evidence, each day would need the same camera position, the same time of day, a scale in
             frame, a weighed amount of food and a note of what was left over. The{" "}
             <Link href="/experiment#footage">footage list</Link> sets this out.
           </p>
           <p>
-            Until then the register keeps every observation separate from every interpretation, and the open questions stay
+            Until then the log keeps every observation separate from every interpretation, and the open questions stay
             open. <Link href="/#questions-title">Read the open questions</Link>.
           </p>
         </div>
-        <HalftonePlate
-          media={media.specimen}
-          ratio="1 / 1"
-          caption="A cleared specimen under a microscope: the kind of detail a phone camera at an anthill cannot reach."
+        <Frame
+          media={media.moss}
+          sizes="(min-width: 900px) 40vw, 100vw"
+          className={styles.measureFrame}
+          caption="One ant, one droplet: no scale in frame, so no size can be read"
         />
       </section>
 
@@ -170,6 +181,7 @@ export default function SciencePage() {
           ))}
         </ol>
       </section>
+      </div>
     </>
   );
 }

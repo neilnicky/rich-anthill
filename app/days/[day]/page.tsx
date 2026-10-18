@@ -23,7 +23,7 @@ function parse(day: string) {
 
 export async function generateMetadata({ params }: PageProps<"/days/[day]">): Promise<Metadata> {
   const ep = parse((await params).day);
-  if (!ep) return { title: "Day not issued" };
+  if (!ep) return { title: "Day not yet filmed" };
   return {
     title: `Day ${ep.day} · ${issuedLine(ep)}`,
     description: `${formatDate(ep.date)}. ${ep.summary}`,
@@ -41,7 +41,9 @@ export default async function DayPage({ params }: PageProps<"/days/[day]">) {
     <article className={styles.page} aria-labelledby="day-title">
       <header className={`wrap ${styles.head}`}>
         <p className={styles.code}>
-          {dayCode(ep.day)}
+          <span className={styles.num} aria-hidden="true">
+            {String(ep.day).padStart(2, "0")}
+          </span>
           <span className={styles.date}>
             <StatusLabel status="confirmed">Posted {formatDate(ep.date)}</StatusLabel>
           </span>
@@ -61,10 +63,10 @@ export default async function DayPage({ params }: PageProps<"/days/[day]">) {
         <div className={styles.record}>
           <section className={styles.block} aria-labelledby="issued-h">
             <h2 id="issued-h" className={styles.h2}>
-              Issued
+              Given
             </h2>
             <p className={styles.issued} data-status={ep.issued.status}>
-              <FoodMark episode={ep} size={40} className={styles.mark} />
+              <FoodMark episode={ep} size={22} className={styles.mark} />
               <Registration state={ep.issued.status}>{issuedLabel(ep)}</Registration>
             </p>
             <StatusLabel status={ep.issued.status} />
@@ -74,7 +76,7 @@ export default async function DayPage({ params }: PageProps<"/days/[day]">) {
 
           <section className={styles.block} aria-labelledby="observed-h">
             <h2 id="observed-h" className={styles.h2}>
-              Observed in the reel
+              Seen in the reel
             </h2>
             {ep.observations.length ? (
               <ul className={styles.obs}>
@@ -86,7 +88,7 @@ export default async function DayPage({ params }: PageProps<"/days/[day]">) {
               </ul>
             ) : (
               <p className={styles.empty}>
-                Not yet recorded. Nobody has logged what this reel shows yet. The register leaves the space empty rather than
+                Not yet recorded. Nobody has logged what this reel shows yet. This page leaves the space empty rather than
                 guess.
               </p>
             )}
@@ -172,7 +174,7 @@ export default async function DayPage({ params }: PageProps<"/days/[day]">) {
           </Link>
         ) : (
           <span className={`${styles.ticket} ${styles.blank}`}>
-            <span className={styles.dir}>Start of the register</span>
+            <span className={styles.dir}>Start of the series</span>
             <span className={styles.tTitle}>Day 1 is the first entry.</span>
           </span>
         )}
@@ -186,7 +188,7 @@ export default async function DayPage({ params }: PageProps<"/days/[day]">) {
           <span className={`${styles.ticket} ${styles.right} ${styles.blank}`}>
             <span className={styles.dir}>Next</span>
             <span className={styles.tCode}>{dayCode(ep.day + 1)}</span>
-            <span className={styles.tTitle}>Not yet issued</span>
+            <span className={styles.tTitle}>Not yet filmed</span>
           </span>
         )}
         <p className={styles.hint}>

@@ -1,44 +1,75 @@
+/* The station log: newest first, one row per reel, on a spine of elapsed days */
 .head {
   display: grid;
   gap: var(--s-5);
-  padding-block: var(--s-8) var(--s-7);
+  padding-block: var(--s-9) var(--s-7);
 }
 
 .title {
-  font-size: var(--t-display);
-  text-transform: uppercase;
-  font-weight: 840;
-  font-variation-settings: "wdth" 118;
+  font-size: var(--t-hero);
+  font-weight: 300;
+  letter-spacing: -0.035em;
 }
 
 .intro {
-  max-width: 46ch;
+  max-width: 44ch;
+  font-family: var(--f-narr);
   font-size: var(--t-lead);
   line-height: 1.45;
-  margin-bottom: var(--s-4);
+  color: var(--bone-2);
 }
 
 .ledger {
+  position: relative;
   display: grid;
+  padding-bottom: var(--s-10);
+}
+
+/* The spine: elapsed time, running down the left of every entry */
+.ledger::before {
+  content: "";
+  position: absolute;
+  top: var(--s-5);
+  bottom: var(--s-10);
+  left: calc(var(--margin) + 4px);
+  width: 1px;
+  background: var(--line);
 }
 
 .future {
+  position: relative;
   display: grid;
-  gap: var(--s-1);
-  padding: var(--s-5);
-  border: var(--rule-empty);
-  color: var(--ink-umber);
+  grid-template-columns: auto 1fr;
+  column-gap: var(--s-4);
+  row-gap: var(--s-1);
+  align-items: baseline;
+  padding: var(--s-5) 0 var(--s-6);
+}
+
+.futureDot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--ant);
+  animation: rec 2.4s steps(1, end) infinite;
+}
+
+@keyframes rec {
+  50% {
+    opacity: 0.15;
+  }
 }
 
 .futureCode {
-  font-family: var(--f-num);
-  font-variation-settings: "wdth" 87;
+  font-family: var(--f-data);
   font-size: var(--t-data);
-  color: var(--fleck-text);
+  color: var(--bone-2);
 }
 
 .futureText {
-  font-weight: 560;
+  grid-column: 2;
+  color: var(--bone-2);
+  max-width: 50ch;
 }
 
 .list {
@@ -47,15 +78,29 @@
 }
 
 .entry {
+  position: relative;
   display: grid;
   gap: var(--s-4);
-  padding-block: var(--s-7);
-  border-bottom: var(--rule);
+  padding: var(--s-7) 0 var(--s-7) var(--s-6);
+  border-top: 1px solid var(--line);
 }
 
-.entry:first-child {
-  border-top: var(--rule);
-  margin-top: var(--s-6);
+/* A tally mark on the spine for each day */
+.entry::before {
+  content: "";
+  position: absolute;
+  top: calc(var(--s-7) + 0.9rem);
+  left: 0;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1px solid var(--bone-2);
+  background: var(--soil);
+}
+
+.entry:first-child::before {
+  background: var(--ant);
+  border-color: var(--ant);
 }
 
 .rail {
@@ -64,134 +109,136 @@
   gap: var(--s-4);
 }
 
-.code {
-  font-family: var(--f-num);
-  font-variation-settings: "wdth" 87;
-  font-weight: 500;
-  font-size: var(--t-data-l);
-  line-height: 1;
+.num {
+  font-family: var(--f-narr);
+  font-size: var(--t-display);
+  font-weight: 300;
+  font-variation-settings: "opsz" 72;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  font-variant-numeric: lining-nums;
 }
 
 .date {
-  font-family: var(--f-num);
-  font-variation-settings: "wdth" 87;
+  font-family: var(--f-data);
   font-size: var(--t-data);
-  color: var(--ink-moss);
+  color: var(--lichen);
 }
 
 .body {
   display: grid;
   gap: var(--s-4);
-  max-width: 60rem;
+  min-width: 0;
 }
 
 .entryTitle {
   font-size: var(--t-title);
-  text-transform: uppercase;
-  font-weight: 800;
-  font-variation-settings: "wdth" 112;
+  font-weight: 340;
 }
 
 .entryTitle a {
   text-decoration: none;
 }
 
-@media (hover: hover) {
-  .entryTitle a:hover {
-    text-decoration: underline;
-    text-decoration-thickness: 3px;
-  }
+.entryTitle a:hover {
+  text-decoration: underline;
 }
 
 .summary {
   max-width: 52ch;
-  font-size: var(--t-lead);
-  line-height: 1.45;
+  font-family: var(--f-narr);
+  font-size: var(--t-read);
+  line-height: 1.55;
+  color: var(--bone-2);
 }
 
 .facts {
   display: grid;
-  gap: var(--s-4);
+  gap: var(--s-3);
   padding-block: var(--s-4);
-  border-block: var(--hairline);
+  border-block: 1px solid var(--line);
 }
 
 .facts dt {
-  font-family: var(--f-num);
-  font-variation-settings: "wdth" 87;
-  font-size: 0.75rem;
-  margin-bottom: var(--s-1);
+  font-family: var(--f-data);
+  font-size: var(--t-data-s);
+  color: var(--bone-3);
+  margin-bottom: 2px;
 }
 
 .facts dd {
   display: grid;
-  gap: var(--s-1);
+  gap: 2px;
   justify-items: start;
-  font-weight: 560;
 }
 
 .issued {
   display: inline-flex;
   align-items: center;
   gap: var(--s-2);
-  font-family: var(--f-display);
-  font-weight: 780;
-  font-variation-settings: "wdth" 108;
-  text-transform: uppercase;
+  font-weight: 600;
 }
 
-.entry[data-status="reported"] .mark {
-  color: var(--ink-chitin-display);
+.mark {
+  color: var(--ant);
+}
+
+.entry[data-status="confirmed"] .mark {
+  color: var(--lichen);
+}
+
+.entry[data-status="unknown"] .mark {
+  color: var(--bone-3);
 }
 
 .empty {
-  padding: 0.05em 0.5em;
-  border: var(--rule-empty);
-  font-weight: 500;
+  display: inline-block;
+  padding: 1px 8px 2px;
+  border: 1px dashed var(--bone-3);
+  font-family: var(--f-data);
+  font-size: var(--t-data);
+  color: var(--bone-2);
 }
 
 .links {
   display: flex;
   flex-wrap: wrap;
   gap: var(--s-3) var(--s-5);
-  align-items: center;
-  font-weight: 600;
+  font-size: var(--t-small);
 }
 
 .open {
-  display: inline-flex;
-  align-items: center;
-  min-height: 2.75rem;
-  padding: 0 var(--s-4);
-  border: var(--rule);
-  text-decoration: none;
-}
-
-@media (hover: hover) {
-  .open:hover {
-    background: var(--board-deep);
-  }
+  font-weight: 600;
 }
 
 @media (min-width: 900px) {
   .entry {
-    grid-template-columns: 3fr 9fr;
-    column-gap: var(--gutter);
+    grid-template-columns: 12rem minmax(0, 1fr);
+    column-gap: var(--s-7);
+    padding-left: var(--s-7);
   }
   .rail {
     flex-direction: column;
+    align-items: flex-start;
     gap: var(--s-2);
-    position: sticky;
-    top: calc(var(--header-h) + var(--s-5));
-    align-self: start;
+  }
+  .body {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: var(--s-7);
+    align-items: start;
+  }
+  .entryTitle,
+  .summary,
+  .links {
+    grid-column: 1;
   }
   .facts {
-    grid-template-columns: repeat(3, 1fr);
-    column-gap: var(--gutter);
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    border-bottom: 0;
+    padding-top: var(--s-2);
   }
   .future {
-    grid-template-columns: 3fr 9fr;
-    column-gap: var(--gutter);
-    align-items: baseline;
+    padding-left: 0;
   }
 }

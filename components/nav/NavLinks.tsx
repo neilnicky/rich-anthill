@@ -6,7 +6,7 @@ import styles from "./Nav.module.css";
 
 export const DESTINATIONS = [
   { href: "/", label: "Today", glyph: "today" },
-  { href: "/days", label: "Register", glyph: "register" },
+  { href: "/days", label: "Days", glyph: "days" },
   { href: "/science", label: "Science", glyph: "science" },
   { href: "/experiment", label: "The experiment", glyph: "experiment" },
 ] as const;
@@ -17,27 +17,41 @@ function isCurrent(path: string, href: string) {
 
 function Glyph({ name }: { name: (typeof DESTINATIONS)[number]["glyph"] }) {
   return (
-    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+    <svg
+      viewBox="0 0 24 24"
+      width="22"
+      height="22"
+      aria-hidden="true"
+      focusable="false"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.4"
+    >
       {name === "today" ? (
         <>
-          <circle cx="12" cy="9" r="6" fill="currentColor" />
-          <rect x="6" y="17" width="12" height="3" fill="currentColor" />
+          <path d="M3 8V3h5M16 3h5v5M21 16v5h-5M8 21H3v-5" />
+          <circle cx="12" cy="12" r="2.5" fill="currentColor" stroke="none" />
         </>
       ) : null}
-      {name === "register" ? (
-        <g fill="none" stroke="currentColor" strokeWidth="1.75">
-          <rect x="2.5" y="7" width="6.5" height="10" />
-          <rect x="9" y="7" width="6.5" height="10" />
-          <rect x="15.5" y="7" width="6" height="10" strokeDasharray="2 1.6" />
-        </g>
+      {name === "days" ? (
+        <>
+          <rect x="2.5" y="6.5" width="5.5" height="11" />
+          <rect x="9.25" y="6.5" width="5.5" height="11" />
+          <rect x="16" y="6.5" width="5.5" height="11" strokeDasharray="2 1.7" />
+        </>
       ) : null}
       {name === "science" ? (
         <>
-          <circle cx="10" cy="10" r="6.25" fill="none" stroke="currentColor" strokeWidth="1.75" />
-          <path d="M14.5 14.5 21 21" stroke="currentColor" strokeWidth="2.25" />
+          <circle cx="10.5" cy="10.5" r="6" />
+          <path d="M15 15l6 6" />
         </>
       ) : null}
-      {name === "experiment" ? <path d="M6 21V11a6 6 0 0 1 12 0v10z" fill="currentColor" /> : null}
+      {name === "experiment" ? (
+        <>
+          <path d="M2 17.5h20" />
+          <circle cx="12" cy="13" r="3.25" fill="currentColor" stroke="none" />
+        </>
+      ) : null}
     </svg>
   );
 }

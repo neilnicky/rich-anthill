@@ -2,7 +2,7 @@ import { latest, dayCode } from "@/lib/episodes";
 import { issuedLine } from "@/lib/copy";
 import { ogSize, ticket } from "./_og/ticket";
 
-export const alt = "The Rich Anthill register: today's issue and an outcome nobody knows yet.";
+export const alt = "Rich Anthill: the latest day of a daily ant-feeding experiment, and an outcome nobody knows yet.";
 export const size = ogSize;
 export const contentType = "image/png";
 

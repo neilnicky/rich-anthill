@@ -7,7 +7,7 @@ export function Footer() {
     <footer className={styles.footer}>
       <div className={`wrap ${styles.grid}`}>
         <div className={styles.colophon}>
-          <ServiceMark size={40} />
+          <ServiceMark size={32} />
           <p className={styles.notice}>
             An independent concept for <a href="https://www.instagram.com/rich_anthill/">@rich_anthill</a>, the Ant Life
             Improvement Service. Not made, endorsed or reviewed by the creator.
@@ -20,7 +20,7 @@ export function Footer() {
           </div>
           <div>
             <dt>Photographs</dt>
-            <dd>Every photograph here is a stand-in of other ants, printed as a halftone and labelled. None shows this colony.</dd>
+            <dd>Every photograph here is a stand-in of other ants and says so on the frame. None shows this colony.</dd>
           </div>
           <div>
             <dt>Science</dt>

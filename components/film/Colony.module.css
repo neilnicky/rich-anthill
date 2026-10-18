@@ -1,0 +1,91 @@
+/* A held frame with the record sliding over it: the photograph stays, the label scrolls. */
+.colony {
+  --held-h: calc(100svh - var(--header-h) - var(--bottom-nav-h));
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  background: var(--soil);
+}
+
+.held {
+  grid-area: 1 / 1;
+  position: sticky;
+  top: var(--header-h);
+  height: var(--held-h);
+}
+
+.frame {
+  height: 100%;
+}
+
+.over {
+  grid-area: 1 / 1;
+  position: relative;
+  z-index: 2;
+  display: grid;
+  padding: calc(var(--held-h) * 0.62) var(--margin) var(--s-10);
+}
+
+.label {
+  justify-self: end;
+  width: min(100%, 34rem);
+  padding: var(--s-6) var(--s-5) var(--s-5);
+  box-shadow: 0 24px 60px -20px rgb(0 0 0 / 0.55);
+}
+
+.title {
+  font-size: var(--t-display);
+  font-weight: 320;
+  letter-spacing: -0.03em;
+}
+
+.intro {
+  margin-top: var(--s-4);
+  font-family: var(--f-narr);
+  font-size: var(--t-read);
+  line-height: 1.5;
+  color: var(--ink-2);
+  max-width: 40ch;
+}
+
+.rows {
+  margin-top: var(--s-6);
+  border-top: 1px solid var(--ink);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  gap: var(--s-3);
+  padding-block: var(--s-3);
+  border-bottom: 1px solid var(--line-ash);
+}
+
+.row dt {
+  font-family: var(--f-data);
+  font-size: var(--t-data);
+  color: var(--ink-3);
+  padding-top: 0.15em;
+}
+
+.row dd {
+  display: grid;
+  gap: var(--s-1);
+  justify-items: start;
+}
+
+.value {
+  font-weight: 500;
+}
+
+.row[data-status="unknown"] .value {
+  color: var(--ink-2);
+}
+
+@media (min-width: 900px) {
+  .over {
+    padding-inline: calc(var(--margin) + var(--frame-inset));
+  }
+  .label {
+    padding: var(--s-7) var(--s-6) var(--s-6);
+  }
+}

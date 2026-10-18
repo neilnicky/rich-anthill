@@ -6,9 +6,9 @@ test("opening states the latest day and links the register", async ({ page }) =>
   await expect(page).toHaveTitle(/Rich Anthill/);
   const h1 = page.getByRole("heading", { level: 1 });
   await expect(h1).toContainText("Day 3");
-  await expect(h1).toContainText("Protein issued");
+  await expect(h1).toContainText("Whey protein");
   await expect(h1).toContainText("Outcome unknown");
-  await expect(page.getByText("What was issued: reported, not yet checked against the reels")).toBeVisible();
+  await expect(page.getByText("What was given: reported, not yet checked against the reels")).toBeVisible();
 });
 
 test("register strip marks today and opens a day", async ({ page }) => {
@@ -17,7 +17,7 @@ test("register strip marks today and opens a day", async ({ page }) => {
   await expect(strip.locator('[aria-current="date"]')).toHaveAttribute("href", "/days/3");
   await strip.getByRole("link", { name: /Day 1:/ }).click();
   await expect(page).toHaveURL(/\/days\/1$/);
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("The Service opens an account");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("The first food");
 });
 
 test("return-to-latest reaches the newest day", async ({ page }) => {
@@ -44,7 +44,7 @@ test("Day 2 shows its gap instead of a guess", async ({ page }) => {
 test("an unissued day returns 404 with the empty ticket", async ({ page }) => {
   const res = await page.goto("/days/99");
   expect(res?.status()).toBe(404);
-  await expect(page.getByRole("heading", { name: "Not yet issued" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Not yet filmed" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Go to Day 3" })).toBeVisible();
 });
 

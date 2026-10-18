@@ -1,12 +1,13 @@
-# Rich Anthill · register
+# Rich Anthill · a documentary at ant height
 
 An independent concept site for [@rich_anthill](https://www.instagram.com/rich_anthill/) ("Ant Life Improvement Service"), a daily Instagram series in which the creator leaves food at one wild anthill and films it. Not made, endorsed or reviewed by the creator.
 
-The site keeps the series as a printed register: what was issued each day, what the reels show, what published science says, and what nobody knows yet. Every fact carries a status (confirmed, reported, not yet known, published study, open question).
+The site follows the series as a documentary: the scroll is the camera, descending from eye level to the food at ant height, then following the ants out of sight. It keeps what was given each day, what the reels show, what published science says, and what nobody knows yet. Every fact carries a status (confirmed, reported, not yet known, published study, open question), shown as focus: confirmed is sharp, reported is a touch soft.
 
 - Brief: `docs/brief.md`
 - Research, narrative, design system, interaction spec, architecture: `docs/01`–`05`
-- Creative review that was approved before the build: `docs/06-creative-review.md`
+- Creative review that was approved before the first build: `docs/06-creative-review.md`
+- Why the first world was replaced, and what changed: `docs/07-redesign.md`
 - Product record: `PRODUCT.md`
 
 ## Run
@@ -14,8 +15,9 @@ The site keeps the series as a printed register: what was issued each day, what 
 ```bash
 pnpm install
 pnpm dev            # http://localhost:3000
-pnpm build          # validates content, then builds a fully static site
-pnpm start
+pnpm build:next     # validates content, then builds a fully static Next.js site
+pnpm start          # serves that build
+pnpm build          # OpenNext Cloudflare worker build (deploy: pnpm cf:deploy)
 ```
 
 Checks:
@@ -25,10 +27,11 @@ pnpm validate       # content schema + cross-checks
 pnpm typecheck
 pnpm lint
 pnpm test           # Vitest unit tests
-pnpm test:e2e       # Playwright (desktop, mobile, reduced motion, axe) — run after `pnpm build`
+pnpm test:e2e       # Playwright (desktop, mobile, reduced motion, axe) — run after `pnpm build:next`
+pnpm photos         # rebuild the responsive photographs from assets/
 ```
 
-Stack: Next.js 16 App Router (Cache Components, `ensureStatic = "navigation"` on the root layout, so any request-time rendering fails the build), React 19, TypeScript, CSS Modules on `app/tokens.css`, Motion for the one pinned scene, zod for content.
+Stack: Next.js 16 App Router (every route prerendered static; Cache Components is off because its render path hangs in workerd under @opennextjs/cloudflare 1.20.x), React 19, TypeScript, CSS Modules on `app/tokens.css`, CSS scroll-driven animations for the scroll choreography (no motion library; every scene has a static fallback), zod for content.
 
 ## Add a day
 
@@ -40,15 +43,15 @@ Stack: Next.js 16 App Router (Cache Components, `ensureStatic = "navigation"` on
 3. Add one import line in `lib/episodes.ts`.
 4. `pnpm validate && pnpm test`, then build and deploy.
 
-The homepage headline, register strips, archive, sitemap and share images all update from the data.
+The homepage headline, film strips, log, archive, sitemap and share images all update from the data.
 
 ## Replace a stand-in photograph
 
-Every photograph on the site is a stand-in of other ants and says so in its caption. To replace one with creator footage or a licensed image:
+Every photograph on the site is a stand-in of other ants and says so in a super on the frame. To replace one with creator footage or a licensed image:
 
 1. Put the file in `assets/`.
 2. In `content/media.ts`, point the entry's `src` at it, update `alt`, set `credit` and `licence`, and change `role` to `reel-still` if it is from the series.
-3. Add or edit the entry in `scripts/halftone.mjs` and run `pnpm plates` (writes 1-bit halftone masks to `public/media/plates/`).
+3. Add or edit the entry in `scripts/photos.mjs` and run `pnpm photos` (writes AVIF/WebP at four widths plus a soft focus layer to `public/media/photos/`).
 
 `/experiment#standins` lists every stand-in, where it appears, and its licence status.
 
@@ -64,5 +67,5 @@ Every photograph on the site is a stand-in of other ants and says so in its capt
 ## Not used, on purpose
 
 - The supplied 3D model (`assets/3D Ant Model`) is AI-generated (Tripo), static and unrigged. A photoreal ant would read as this colony, and the print world is flat. See `docs/05` §9.
-- No smooth-scroll library. Native scroll throughout; reduced motion unpins the stage.
+- No smooth-scroll library and no motion library. Native scroll throughout; reduced motion unpins every scene.
 - No analytics, no Instagram scripts until a visitor presses play.

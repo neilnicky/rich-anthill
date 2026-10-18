@@ -1,0 +1,537 @@
+/* ───────────── Base: static, readable everywhere (no scroll timelines, or reduced motion) ───────────── */
+
+.descent {
+  --stage-h: calc(100svh - var(--header-h) - var(--bottom-nav-h));
+  background: var(--soil);
+}
+
+.stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.frame {
+  grid-area: 1 / 1;
+  position: relative;
+  height: max(var(--stage-h), 34rem);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.camera {
+  position: absolute;
+  inset: 0;
+  transform-origin: 49% 56%;
+}
+
+.photo {
+  position: absolute;
+  inset: 0;
+}
+
+.soft {
+  opacity: 0;
+}
+
+/* Photographic scrim: holds narration legible over any frame */
+.shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, color-mix(in srgb, var(--soil) 92%, transparent) 0%, transparent 62%),
+    color-mix(in srgb, var(--soil) 22%, transparent);
+}
+
+.ticks {
+  position: absolute;
+  inset: var(--frame-inset);
+  pointer-events: none;
+  --t: var(--tick);
+  background:
+    linear-gradient(var(--bone), var(--bone)) top left / var(--t) 1px no-repeat,
+    linear-gradient(var(--bone), var(--bone)) top left / 1px var(--t) no-repeat,
+    linear-gradient(var(--bone), var(--bone)) top right / var(--t) 1px no-repeat,
+    linear-gradient(var(--bone), var(--bone)) top right / 1px var(--t) no-repeat,
+    linear-gradient(var(--bone), var(--bone)) bottom left / var(--t) 1px no-repeat,
+    linear-gradient(var(--bone), var(--bone)) bottom left / 1px var(--t) no-repeat,
+    linear-gradient(var(--bone), var(--bone)) bottom right / var(--t) 1px no-repeat,
+    linear-gradient(var(--bone), var(--bone)) bottom right / 1px var(--t) no-repeat;
+  opacity: 0.8;
+}
+
+.super {
+  position: absolute;
+  top: calc(var(--frame-inset) + var(--s-3));
+  left: calc(var(--frame-inset) + var(--s-3));
+  max-width: calc(100% - 2 * var(--frame-inset) - var(--s-6));
+  padding: 3px 7px 4px;
+  background: color-mix(in srgb, var(--soil) 82%, transparent);
+  color: var(--bone);
+  font-family: var(--f-data);
+  font-size: var(--t-data-s);
+  line-height: 1.4;
+}
+
+.gauge,
+.cue {
+  display: none;
+}
+
+.beats {
+  display: contents;
+}
+
+.beat {
+  position: relative;
+  z-index: 2;
+  padding-inline: calc(var(--margin) + var(--frame-inset) * 0.5);
+}
+
+.b1 {
+  grid-area: 1 / 1;
+  align-self: end;
+  display: grid;
+  gap: var(--s-5);
+  padding-bottom: calc(var(--frame-inset) + var(--s-4));
+  max-width: 64rem;
+}
+
+.b2,
+.b3,
+.b4 {
+  max-width: 40rem;
+  padding-block: var(--s-6);
+}
+
+.b4 {
+  padding-bottom: var(--s-9);
+}
+
+.headline {
+  display: grid;
+  font-size: var(--t-hero);
+  font-weight: 330;
+  font-variation-settings: "opsz" 72;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  color: var(--bone);
+}
+
+.line {
+  display: grid;
+  justify-items: start;
+}
+
+/* The reported line sits a touch soft (Registration); the open line is in the ant colour */
+.open {
+  color: var(--ant);
+  font-style: italic;
+  font-weight: 300;
+}
+
+.lead {
+  max-width: 34ch;
+  font-family: var(--f-narr);
+  font-size: var(--t-lead);
+  font-variation-settings: "opsz" 24;
+  line-height: 1.42;
+  color: var(--bone);
+}
+
+.status {
+  margin-top: calc(var(--s-2) * -1);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+}
+
+.primary,
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.875rem;
+  padding: 0 var(--s-5);
+  font-size: var(--t-small);
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    background-color var(--m-press) ease,
+    border-color var(--m-press) ease,
+    color var(--m-press) ease;
+}
+
+.primary {
+  background: var(--bone);
+  color: var(--soil);
+}
+
+.primary:hover {
+  background: #fff;
+}
+
+.secondary {
+  border: 1px solid color-mix(in srgb, var(--bone) 60%, transparent);
+  color: var(--bone);
+}
+
+.secondary:hover {
+  border-color: var(--bone);
+  background: color-mix(in srgb, var(--soil) 60%, transparent);
+}
+
+.strip {
+  min-width: 0;
+}
+
+.narr {
+  font-family: var(--f-narr);
+  font-size: var(--t-narr);
+  font-weight: 340;
+  font-variation-settings: "opsz" 48;
+  line-height: 1.22;
+  letter-spacing: -0.012em;
+  color: var(--bone);
+}
+
+.narr > span:last-child {
+  display: flex;
+  margin-top: var(--s-3);
+}
+
+.b3 {
+  display: grid;
+  gap: var(--s-6);
+}
+
+@media (min-width: 900px) {
+  .b1 {
+    max-width: none;
+    padding-bottom: calc(var(--frame-inset) + var(--s-6));
+    padding-right: calc(var(--margin) + var(--frame-inset));
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: var(--s-8);
+    align-items: end;
+  }
+  .headline,
+  .lead,
+  .status,
+  .actions {
+    grid-column: 1;
+  }
+  .strip {
+    grid-column: 2;
+    grid-row: 1 / span 4;
+    align-self: end;
+  }
+}
+
+/* ───────────── Enhanced: the descent, driven by the scroll position ───────────── */
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .track {
+      height: 420svh;
+      view-timeline: --descent block;
+    }
+
+    .stage {
+      position: sticky;
+      top: var(--header-h);
+      height: var(--stage-h);
+      overflow: hidden;
+    }
+
+    .frame {
+      height: 100%;
+    }
+
+    .b2,
+    .b3,
+    .b4 {
+      grid-area: 1 / 1;
+      align-self: end;
+      padding-block: 0 calc(var(--frame-inset) + var(--s-7));
+    }
+
+    .beat,
+    .camera,
+    .soft,
+    .shade,
+    .gaugeMarker,
+    .cue {
+      animation-timeline: --descent;
+      animation-range: contain 0% contain 100%;
+      animation-fill-mode: both;
+      animation-duration: auto;
+    }
+
+    /* Push-in on the crumb: slow at both ends, like a dolly */
+    .camera {
+      animation-name: push;
+      animation-timing-function: cubic-bezier(0.45, 0, 0.4, 1);
+      will-change: transform;
+    }
+
+    @keyframes push {
+      from {
+        transform: scale(1.06);
+      }
+      to {
+        transform: scale(2.35);
+      }
+    }
+
+    /* Rack focus: the frame starts soft and pulls sharp onto the crumb */
+    .soft {
+      animation-name: rack;
+      animation-timing-function: linear;
+    }
+
+    @keyframes rack {
+      0%,
+      14% {
+        opacity: 0.55;
+      }
+      46%,
+      100% {
+        opacity: 0;
+      }
+    }
+
+    .shade {
+      animation-name: shade;
+      animation-timing-function: linear;
+    }
+
+    @keyframes shade {
+      0%,
+      20% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.72;
+      }
+      100% {
+        opacity: 0.86;
+      }
+    }
+
+    /* Subtitles: each beat holds, then hands over to the next */
+    .beat {
+      animation-timing-function: linear;
+    }
+
+    .b1 {
+      animation-name: b1;
+    }
+    .b2 {
+      animation-name: b2;
+    }
+    .b3 {
+      animation-name: b3;
+    }
+    .b4 {
+      animation-name: b4;
+    }
+
+    @keyframes b1 {
+      0%,
+      16% {
+        opacity: 1;
+        transform: none;
+      }
+      23%,
+      100% {
+        opacity: 0;
+        transform: translateY(-2.5rem);
+      }
+    }
+
+    @keyframes b2 {
+      0%,
+      25% {
+        opacity: 0;
+        transform: translateY(2rem);
+      }
+      32%,
+      45% {
+        opacity: 1;
+        transform: none;
+      }
+      52%,
+      100% {
+        opacity: 0;
+        transform: translateY(-2rem);
+      }
+    }
+
+    @keyframes b3 {
+      0%,
+      53% {
+        opacity: 0;
+        transform: translateY(2rem);
+      }
+      60%,
+      73% {
+        opacity: 1;
+        transform: none;
+      }
+      80%,
+      100% {
+        opacity: 0;
+        transform: translateY(-2rem);
+      }
+    }
+
+    @keyframes b4 {
+      0%,
+      81% {
+        opacity: 0;
+        transform: translateY(2rem);
+      }
+      88%,
+      100% {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    /* Only the opening beat has controls; keep them reachable when focused */
+    .b1:focus-within {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+
+    .b2,
+    .b3,
+    .b4 {
+      pointer-events: none;
+    }
+
+    /* Camera height gauge: the marker drops from eye level to ant height */
+    .gauge {
+      position: absolute;
+      z-index: 3;
+      top: 50%;
+      right: calc(var(--frame-inset) + var(--s-4));
+      display: grid;
+      grid-template-columns: auto auto;
+      column-gap: var(--s-3);
+      transform: translateY(-50%);
+      font-family: var(--f-data);
+      font-size: var(--t-data-s);
+      line-height: 1;
+      color: var(--bone-2);
+      --gauge-h: 9rem;
+    }
+
+    .gaugeTitle {
+      grid-column: 1 / -1;
+      margin-bottom: var(--s-3);
+      color: var(--bone);
+    }
+
+    .gaugeScale {
+      grid-column: 2;
+      grid-row: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: var(--gauge-h);
+      padding: 0 0 0 var(--s-3);
+      border-left: 1px solid color-mix(in srgb, var(--bone) 50%, transparent);
+      list-style: none;
+      text-align: left;
+    }
+
+    .gaugeMarker {
+      grid-column: 2;
+      grid-row: 2;
+      align-self: start;
+      width: 9px;
+      height: 9px;
+      margin-left: -5px;
+      margin-top: -4px;
+      border-radius: 50%;
+      background: var(--ant);
+      animation-name: gauge;
+      animation-timing-function: cubic-bezier(0.45, 0, 0.4, 1);
+    }
+
+    @keyframes gauge {
+      from {
+        transform: translateY(0);
+      }
+      to {
+        transform: translateY(var(--gauge-h));
+      }
+    }
+
+    .cue {
+      position: absolute;
+      z-index: 3;
+      right: calc(var(--frame-inset) + var(--s-4));
+      bottom: calc(var(--frame-inset) + var(--s-3));
+      display: block;
+      font-size: var(--t-small);
+      color: var(--bone-2);
+      animation-name: cue;
+      animation-timing-function: linear;
+    }
+
+    @keyframes cue {
+      0%,
+      4% {
+        opacity: 1;
+      }
+      10%,
+      100% {
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 899.98px) {
+      .track {
+        height: 360svh;
+      }
+      /* The portrait crop is already tight: push in less */
+      .camera {
+        animation-name: push-narrow;
+      }
+      @keyframes push-narrow {
+        from {
+          transform: scale(1.04);
+        }
+        to {
+          transform: scale(1.6);
+        }
+      }
+      /* The gauge waits until the opening beat has handed over */
+      .gauge {
+        top: calc(var(--frame-inset) + var(--s-10));
+        transform: none;
+        --gauge-h: 6.5rem;
+        animation: gauge-in linear both;
+        animation-timeline: --descent;
+        animation-range: contain 0% contain 100%;
+      }
+      @keyframes gauge-in {
+        0%,
+        18% {
+          opacity: 0;
+        }
+        25%,
+        100% {
+          opacity: 1;
+        }
+      }
+      .cue {
+        display: none;
+      }
+    }
+  }
+}

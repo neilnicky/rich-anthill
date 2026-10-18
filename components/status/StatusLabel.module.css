@@ -1,56 +1,77 @@
 .label {
+  --c-confirmed: var(--lichen);
+  --c-reported: var(--ant);
+  --c-plain: var(--bone-2);
   display: inline-flex;
-  align-items: center;
-  gap: 0.5em;
-  font-family: var(--f-text);
-  font-size: var(--t-annot);
-  font-weight: 560;
-  line-height: 1.3;
+  align-items: baseline;
+  gap: 0.6em;
+  font-family: var(--f-data);
+  font-size: var(--t-data);
+  line-height: 1.45;
+  letter-spacing: 0;
+  color: var(--c-plain);
 }
 
-.swatch {
-  position: relative;
-  flex: none;
-  width: 0.7em;
-  height: 0.7em;
-  background: currentColor;
+:global(.sheet) .label {
+  --c-confirmed: var(--lichen-ash);
+  --c-reported: var(--ant-ash);
+  --c-plain: var(--ink-2);
 }
 
 .label[data-status="confirmed"] {
-  color: var(--ink-moss);
+  color: var(--c-confirmed);
 }
 
 .label[data-status="reported"],
 .label[data-status="hypothesis"] {
-  color: var(--ink-chitin);
+  color: var(--c-reported);
 }
 
-.label[data-status="reported"] .swatch::before {
+/* Focus marks, 9px, sitting on the text baseline */
+.mark {
+  position: relative;
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  transform: translateY(0.02em);
+}
+
+.label[data-status="confirmed"] .mark {
+  background: var(--c-confirmed);
+}
+
+.label[data-status="reported"] .mark {
+  background: var(--c-reported);
+  box-shadow: 0 0 3px 2px color-mix(in srgb, var(--c-reported) 45%, transparent);
+}
+
+.label[data-status="unknown"] .mark {
+  border: 1px dashed currentColor;
+}
+
+.label[data-status="science"] .mark {
+  border: 1px solid currentColor;
+}
+
+.label[data-status="science"] .mark::after {
   content: "";
   position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: var(--fleck);
-  transform: translate(2px, -2px);
+  inset: 2.5px;
+  border-radius: 50%;
+  background: currentColor;
 }
 
-.label[data-status="hypothesis"] .swatch {
-  background: transparent;
-  outline: 1.5px solid currentColor;
-  outline-offset: -1.5px;
-  transform: translate(2px, -1px);
+.label[data-status="hypothesis"] .mark {
+  border: 1px solid currentColor;
 }
 
-.label[data-status="unknown"] {
-  color: var(--ink-umber);
-}
-
-.label[data-status="unknown"] .swatch {
-  background: transparent;
-  outline: 1.5px dashed var(--fleck);
-  outline-offset: -1.5px;
-}
-
-.label[data-status="science"] {
-  color: var(--ink-umber);
+.label[data-status="hypothesis"] .mark::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  transform: translate(3px, -2px);
+  opacity: 0.6;
 }
