@@ -1,10 +1,10 @@
 import { ImageResponse } from "next/og";
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
+import { archivoB64, martianB64 } from "./fonts.generated";
 
-const dir = join(process.cwd(), "app", "_og");
-const archivo = await readFile(join(dir, "archivo-800.woff"));
-const martian = await readFile(join(dir, "martian-400.woff"));
+// Decoded once per isolate; no fs, so it runs identically in Node and workerd.
+const decode = (b64: string) => Uint8Array.from(atob(b64), (c) => c.charCodeAt(0)).buffer;
+const archivo = decode(archivoB64);
+const martian = decode(martianB64);
 
 export const ogSize = { width: 1200, height: 630 };
 

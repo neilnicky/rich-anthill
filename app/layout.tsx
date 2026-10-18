@@ -4,8 +4,6 @@ import { Header } from "@/components/nav/Header";
 import { Footer } from "@/components/nav/Footer";
 import "./globals.css";
 
-export const ensureStatic = "navigation";
-
 const archivo = Archivo({ subsets: ["latin"], axes: ["wdth"], variable: "--font-archivo", display: "swap" });
 const golos = Golos_Text({ subsets: ["latin"], variable: "--font-golos", display: "swap" });
 const martian = Martian_Mono({ subsets: ["latin"], axes: ["wdth"], variable: "--font-martian", display: "swap" });
