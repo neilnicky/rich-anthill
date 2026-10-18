@@ -8,8 +8,8 @@ import { SeenRecorder } from "@/components/register/SeenRecorder";
 import styles from "./days.module.css";
 
 export const metadata: Metadata = {
-  title: "The register",
-  description: "Every day of the Rich Anthill experiment in order: what was issued, what the reel shows, and how sure anyone is.",
+  title: "Every day",
+  description: "Every day of the Rich Anthill experiment in order: what was given, what the reel shows, and how sure anyone is.",
 };
 
 export default function DaysPage() {
@@ -18,26 +18,28 @@ export default function DaysPage() {
   return (
     <>
       <header className={`wrap ${styles.head}`}>
-        <h1 className={styles.title}>The register</h1>
+        <h1 className={styles.title}>Every day</h1>
         <p className={styles.intro}>
-          One entry per day since {formatDate(episodes[0].date)}. Newest at the top. Each entry keeps what went in apart from
-          what the camera saw.
+          One entry per reel since {formatDate(episodes[0].date)}, newest at the top. Each entry keeps what went in apart
+          from what the camera saw.
         </p>
-        <RegisterStrip episodes={episodes} variant="row" upcoming={7} />
+        <RegisterStrip episodes={episodes} variant="row" upcoming={5} />
       </header>
 
       <div className={`wrap ${styles.ledger}`}>
         <div className={styles.future}>
-          <span className={styles.futureCode}>
-            {dayCode(last.day + 1)} onward
-          </span>
-          <span className={styles.futureText}>Not yet issued. One reel a day on Instagram; a new entry follows each one.</span>
+          <span className={styles.futureDot} aria-hidden="true" />
+          <span className={styles.futureCode}>{dayCode(last.day + 1)}</span>
+          <span className={styles.futureText}>Not yet filmed. One reel a day on Instagram; a new entry follows each one.</span>
         </div>
         <ol className={styles.list} reversed>
           {newestFirst.map((ep) => (
             <li key={ep.day} className={styles.entry} data-status={ep.issued.status}>
               <div className={styles.rail}>
-                <span className={styles.code}>{dayCode(ep.day)}</span>
+                <span className={styles.num} aria-hidden="true">
+                  {String(ep.day).padStart(2, "0")}
+                </span>
+                <span className="visually-hidden">Day {ep.day}, </span>
                 <time dateTime={ep.date} className={styles.date}>
                   {formatDate(ep.date)}
                 </time>
@@ -49,7 +51,7 @@ export default function DaysPage() {
                 <p className={styles.summary}>{ep.summary}</p>
                 <dl className={styles.facts}>
                   <div>
-                    <dt>Issued</dt>
+                    <dt>Given</dt>
                     <dd>
                       <span className={styles.issued}>
                         <FoodMark episode={ep} size={18} className={styles.mark} />
@@ -59,7 +61,7 @@ export default function DaysPage() {
                     </dd>
                   </div>
                   <div>
-                    <dt>Observed</dt>
+                    <dt>Seen in the reel</dt>
                     <dd>
                       {ep.observations.length ? (
                         `${ep.observations.length} recorded`
@@ -71,7 +73,7 @@ export default function DaysPage() {
                   <div>
                     <dt>Measured</dt>
                     <dd>
-                      {ep.measurements.length ? `${ep.measurements.length} values` : <span className={styles.empty}>Nothing</span>}
+                      {ep.measurements.length ? `${ep.measurements.length} values` : <span className={styles.empty}>Nothing measured</span>}
                     </dd>
                   </div>
                 </dl>

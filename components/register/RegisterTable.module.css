@@ -1,75 +1,108 @@
+/* The log, printed on an ash sheet. Stacks into one entry per day on narrow screens. */
 .scroller {
-  overflow-x: auto;
-  border: var(--rule);
-  background: var(--paper);
+  min-width: 0;
 }
 
 .table {
   width: 100%;
-  min-width: 46rem;
   border-collapse: collapse;
-  font-size: var(--t-annot);
+  font-size: var(--t-small);
+  line-height: 1.45;
 }
 
+.table thead {
+  display: none;
+}
+
+.table tbody,
+.table tr,
 .table th,
 .table td {
-  padding: var(--s-4);
-  text-align: left;
-  vertical-align: top;
-  border-bottom: var(--hairline);
+  display: block;
 }
 
-.table thead th {
-  font-family: var(--f-num);
-  font-weight: 450;
-  font-size: 0.75rem;
-  font-variation-settings: "wdth" 87;
-  border-bottom: 6px solid var(--ink-umber);
+.table tr {
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1fr);
+  gap: var(--s-2) var(--s-4);
+  padding-block: var(--s-5);
+  border-top: 1px solid var(--ink);
 }
 
-.table tbody tr:last-child > * {
-  border-bottom: 0;
+.table tr:last-child {
+  border-bottom: 1px solid var(--ink);
 }
 
-.table td {
-  display: table-cell;
+.table th[scope="row"] {
+  grid-row: span 5;
 }
 
-.table td > * + * {
-  margin-top: var(--s-2);
+.table td::before {
+  display: block;
+  margin-bottom: 2px;
+  font-family: var(--f-data);
+  font-size: var(--t-data-s);
+  color: var(--ink-3);
+}
+
+.table td:nth-of-type(1)::before {
+  content: "Posted";
+}
+.table td:nth-of-type(2)::before {
+  content: "Given";
+}
+.table td:nth-of-type(3)::before {
+  content: "Seen in the reel";
+}
+.table td:nth-of-type(4)::before {
+  content: "Measured";
+}
+.table td:nth-of-type(5)::before {
+  content: "Reel";
 }
 
 .day {
-  font-family: var(--f-num);
-  font-variation-settings: "wdth" 87;
-  font-weight: 500;
-  font-size: 1rem;
+  font-family: var(--f-narr);
+  font-size: 1.75rem;
+  font-weight: 340;
+  font-variation-settings: "opsz" 36;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+
+.day:hover {
+  text-decoration: underline;
 }
 
 .issued {
   display: flex;
   align-items: center;
   gap: var(--s-2);
-  font-family: var(--f-display);
-  font-weight: 780;
-  font-variation-settings: "wdth" 108;
-  text-transform: uppercase;
-  font-size: 1.0625rem;
-  line-height: 1.1;
+  font-weight: 600;
+  margin-bottom: 2px;
 }
 
 .mark {
   flex: none;
+  color: var(--ant-ash);
 }
 
-tr[data-status="reported"] .mark {
-  color: var(--ink-chitin-display);
+.table tr[data-status="confirmed"] .mark {
+  color: var(--lichen-ash);
+}
+
+.table tr[data-status="unknown"] .mark {
+  color: var(--ink-3);
 }
 
 .empty {
   display: inline-block;
-  padding: 0.1em 0.5em;
-  border: var(--rule-empty);
+  padding: 1px 8px 2px;
+  border: 1px dashed var(--ink-3);
+  color: var(--ink-2);
+  font-family: var(--f-data);
+  font-size: var(--t-data);
 }
 
 .obs {
@@ -78,46 +111,39 @@ tr[data-status="reported"] .mark {
 
 .reel {
   font-weight: 600;
-  white-space: nowrap;
 }
 
-/* Phones: each day becomes a stacked ticket rather than a sideways-scrolling table */
-@media (max-width: 699.98px) {
-  .scroller {
-    overflow: visible;
-    border: 0;
-    background: none;
-  }
-  .table {
-    min-width: 0;
-  }
+@media (min-width: 900px) {
   .table thead {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
+    display: table-header-group;
+  }
+  .table tbody {
+    display: table-row-group;
   }
   .table tr {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    border: var(--rule);
-    background: var(--paper);
-    margin-bottom: -1.5px;
+    display: table-row;
+    border: 0;
   }
   .table th,
   .table td {
-    display: block;
-    padding: var(--s-3) var(--s-4);
-    border-bottom: 0;
+    display: table-cell;
+    padding: var(--s-4) var(--s-4) var(--s-4) 0;
+    border-bottom: 1px solid var(--line-ash);
+    vertical-align: top;
+    text-align: left;
   }
-  .table tbody th {
-    grid-row: span 2;
-    border-right: var(--hairline);
+  .table thead th {
+    padding-bottom: var(--s-3);
+    border-bottom: 1px solid var(--ink);
+    font-family: var(--f-data);
+    font-size: var(--t-data-s);
+    font-weight: 400;
+    color: var(--ink-3);
   }
-  .table td:nth-of-type(3),
-  .table td:nth-of-type(4) {
-    grid-column: 2;
-    border-top: var(--hairline);
+  .table td::before {
+    content: none !important;
+  }
+  .table th[scope="row"] {
+    width: 8rem;
   }
 }

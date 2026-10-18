@@ -1,9 +1,10 @@
 .footer {
-  margin-top: var(--s-9);
   padding-block: var(--s-8) var(--s-7);
-  border-top: var(--rule);
-  font-size: var(--t-annot);
-  line-height: 1.5;
+  border-top: 1px solid var(--line);
+  background: var(--soil);
+  color: var(--bone-2);
+  font-size: var(--t-small);
+  line-height: 1.55;
 }
 
 .grid {
@@ -15,11 +16,14 @@
   display: grid;
   gap: var(--s-4);
   align-content: start;
-  max-width: 34ch;
+  max-width: 36ch;
+  color: var(--bone);
 }
 
 .notice {
-  font-weight: 560;
+  font-family: var(--f-narr);
+  font-size: 1.0625rem;
+  line-height: 1.45;
 }
 
 .facts {
@@ -28,9 +32,9 @@
 }
 
 .facts dt {
-  font-family: var(--f-num);
-  font-size: 0.75rem;
-  font-variation-settings: "wdth" 87;
+  font-family: var(--f-data);
+  font-size: var(--t-data-s);
+  color: var(--bone-3);
   margin-bottom: var(--s-1);
 }
 

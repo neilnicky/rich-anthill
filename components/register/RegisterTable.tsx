@@ -5,7 +5,7 @@ import { FoodMark } from "@/components/marks/Marks";
 import { StatusLabel } from "@/components/status/StatusLabel";
 import styles from "./RegisterTable.module.css";
 
-/** One row per day: what went in, what the reel showed, how sure anyone is. */
+/** The log: one row per day. What went in, what the reel showed, what was measured, how sure anyone is. */
 export function RegisterTable({ episodes, caption }: { episodes: Episode[]; caption: string }) {
   return (
     <div className={styles.scroller}>
@@ -15,8 +15,9 @@ export function RegisterTable({ episodes, caption }: { episodes: Episode[]; capt
           <tr>
             <th scope="col">Day</th>
             <th scope="col">Posted</th>
-            <th scope="col">Issued</th>
-            <th scope="col">Observed in the reel</th>
+            <th scope="col">Given</th>
+            <th scope="col">Seen in the reel</th>
+            <th scope="col">Measured</th>
             <th scope="col">Reel</th>
           </tr>
         </thead>
@@ -50,6 +51,20 @@ export function RegisterTable({ episodes, caption }: { episodes: Episode[]; capt
                   </ul>
                 ) : (
                   <span className={styles.empty}>Not yet recorded</span>
+                )}
+              </td>
+              <td>
+                {ep.measurements.length ? (
+                  <ul className={styles.obs}>
+                    {ep.measurements.map((m, i) => (
+                      <li key={i}>
+                        {m.label}: {m.value}
+                        {m.unit ? ` ${m.unit}` : ""}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <span className={styles.empty}>Nothing measured</span>
                 )}
               </td>
               <td>

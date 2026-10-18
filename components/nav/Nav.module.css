@@ -2,8 +2,8 @@
   position: sticky;
   top: 0;
   z-index: 40;
-  background: var(--board);
-  border-bottom: var(--rule);
+  background: var(--soil);
+  border-bottom: 1px solid var(--line);
 }
 
 .bar {
@@ -14,33 +14,33 @@
 }
 
 .brand {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: var(--s-3);
-  text-decoration: none;
   min-width: 0;
+  color: var(--bone);
+  text-decoration: none;
 }
 
 .brandText {
   display: grid;
-  line-height: 1.05;
+  line-height: 1.15;
   min-width: 0;
 }
 
 .brandName {
-  font-family: var(--f-display);
-  font-weight: 830;
-  font-variation-settings: "wdth" 118;
-  text-transform: uppercase;
-  font-size: 1.0625rem;
-  letter-spacing: 0;
+  font-family: var(--f-narr);
+  font-size: 1.1875rem;
+  font-weight: 450;
+  font-variation-settings: "opsz" 36;
+  letter-spacing: -0.01em;
 }
 
 .brandSub {
-  font-size: 0.75rem;
+  font-family: var(--f-data);
+  font-size: var(--t-data-s);
+  color: var(--bone-2);
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .topNav {
@@ -49,29 +49,44 @@
 }
 
 .top {
+  display: flex;
+  gap: var(--s-1);
   list-style: none;
   padding: 0;
-  display: flex;
-  gap: var(--s-5);
 }
 
 .topLink {
   position: relative;
-  display: block;
-  padding-block: var(--s-2);
-  font-weight: 560;
-  font-size: var(--t-annot);
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0 var(--s-3);
+  color: var(--bone-2);
+  font-size: var(--t-small);
+  font-weight: 500;
   text-decoration: none;
+  transition: color var(--m-press) ease;
 }
 
+.topLink:hover {
+  color: var(--bone);
+}
+
+.topLink[aria-current="page"] {
+  color: var(--bone);
+}
+
+/* Current page: a focus dot under the label */
 .topLink[aria-current="page"]::after {
   content: "";
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -2px;
+  left: 50%;
+  bottom: 4px;
+  width: 4px;
   height: 4px;
-  background: var(--ink-chitin-display);
+  margin-left: -2px;
+  border-radius: 50%;
+  background: var(--ant);
 }
 
 .tools {
@@ -89,26 +104,30 @@
   display: inline-flex;
   align-items: center;
   gap: var(--s-2);
-  min-height: 2.75rem;
+  min-height: 2.5rem;
   padding: 0 var(--s-3);
-  border: var(--rule);
-  font-family: var(--f-num);
+  border: 1px solid var(--bone-3);
+  color: var(--bone);
+  font-family: var(--f-data);
   font-size: var(--t-data);
-  font-variation-settings: "wdth" 87;
-  text-decoration: none;
   white-space: nowrap;
-  transition: background-color var(--m-press) var(--ease-print);
+  text-decoration: none;
+  transition:
+    border-color var(--m-press) ease,
+    background-color var(--m-press) ease;
 }
 
 .latestLight {
-  width: 8px;
-  height: 8px;
-  background: var(--ink-chitin-display);
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ant);
 }
 
 @media (hover: hover) {
   .latest:hover {
-    background: var(--board-deep);
+    border-color: var(--bone);
+    background: var(--soil-2);
   }
 }
 
@@ -127,47 +146,52 @@
   }
 }
 
-/* Bottom bar, phones and small tablets */
+/* Mobile: a bottom bar that never hides */
 .bottom {
   position: fixed;
   inset: auto 0 0;
   z-index: 40;
-  background: var(--board);
-  border-top: var(--rule);
   padding-bottom: env(safe-area-inset-bottom);
+  background: var(--soil);
+  border-top: 1px solid var(--line);
 }
 
 .bottom ul {
-  list-style: none;
-  padding: 0;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  list-style: none;
+  padding: 0;
 }
 
 .bottomLink {
   position: relative;
   display: grid;
   justify-items: center;
-  gap: 2px;
-  padding: 8px 4px 7px;
-  min-height: 60px;
-  font-size: 0.75rem;
-  font-weight: 560;
+  gap: 3px;
+  height: 60px;
+  padding-top: 9px;
+  color: var(--bone-2);
+  font-size: 0.6875rem;
+  font-weight: 500;
   text-decoration: none;
+}
+
+.bottomLink[aria-current="page"] {
+  color: var(--bone);
 }
 
 .bottomLink[aria-current="page"]::before {
   content: "";
   position: absolute;
-  top: -1.5px;
-  left: 18%;
-  right: 18%;
-  height: 4px;
-  background: var(--ink-chitin-display);
+  top: -1px;
+  left: 30%;
+  right: 30%;
+  height: 2px;
+  background: var(--ant);
 }
 
 .bottomLink:active {
-  background: var(--board-deep);
+  background: var(--soil-2);
 }
 
 @media (min-width: 900px) {

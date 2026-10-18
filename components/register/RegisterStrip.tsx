@@ -1,9 +1,11 @@
 import Link from "next/link";
 import type { Episode } from "@/lib/schema";
-import { cellLabel, dayCode } from "@/lib/episodes";
+import { cellLabel } from "@/lib/episodes";
 import { FoodMark } from "@/components/marks/Marks";
 import { NewBadge } from "./NewBadge";
 import styles from "./RegisterStrip.module.css";
+
+const pad = (day: number) => String(day).padStart(2, "0");
 
 type Props = {
   episodes: Episode[];
@@ -15,8 +17,8 @@ type Props = {
 };
 
 /**
- * The day register: one unbroken row of day cells, oldest first.
- * The latest day carries the today light. Days not yet issued print as empty boxes.
+ * The days as a run of film frames, oldest first. The latest day carries the red tally light;
+ * days not yet filmed are empty frames.
  */
 export function RegisterStrip({ episodes, variant, upcoming = 7, current, label = "Days in the register" }: Props) {
   const latest = episodes[episodes.length - 1];
@@ -35,8 +37,11 @@ export function RegisterStrip({ episodes, variant, upcoming = 7, current, label 
                 data-status={ep.issued.status}
                 aria-current={current === ep.day ? "page" : isLatest ? "date" : undefined}
               >
-                <span className={styles.code}>{dayCode(ep.day)}</span>
-                <FoodMark episode={ep} size={variant === "compact" ? 14 : 28} className={styles.mark} />
+                <span className={styles.code} aria-hidden="true">
+                  <span className={styles.codeWord}>Day </span>
+                  {pad(ep.day)}
+                </span>
+                <FoodMark episode={ep} size={variant === "compact" ? 13 : 22} className={styles.mark} />
                 <span className={styles.food}>
                   <span className="visually-hidden">Day {ep.day}: </span>
                   {cellLabel(ep)}
@@ -50,11 +55,14 @@ export function RegisterStrip({ episodes, variant, upcoming = 7, current, label 
         {Array.from({ length: upcoming }, (_, i) => (
           <li key={`u${i}`} className={styles.item} aria-hidden={i > 0 || undefined}>
             <span className={styles.cell} data-empty>
-              <span className={styles.code}>{dayCode(next + i)}</span>
+              <span className={styles.code} aria-hidden="true">
+                <span className={styles.codeWord}>Day </span>
+                {pad(next + i)}
+              </span>
               <span className={styles.food}>
                 {i === 0 ? (
                   <>
-                    <span className="visually-hidden">Day {next}: </span>Not yet issued
+                    <span className="visually-hidden">Day {next}: </span>Not yet filmed
                   </>
                 ) : null}
               </span>

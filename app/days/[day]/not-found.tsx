@@ -7,13 +7,12 @@ export default function DayNotFound() {
   return (
     <section className={`wrap ${styles.page}`} aria-labelledby="nf-title">
       <div className={styles.box}>
-        <p className={styles.code}>Day not on record</p>
         <h1 id="nf-title" className={styles.title}>
-          Not yet issued
+          Not yet filmed
         </h1>
       </div>
       <p className={styles.text}>
-        The register has no entry for that day. The latest entry is Day {last.day}.
+        No reel exists for that day yet. The latest is Day {last.day}.
       </p>
       <p className={styles.links}>
         <Link href={`/days/${last.day}`}>Go to Day {last.day}</Link>

@@ -2,7 +2,7 @@ import { byDay, dayCode, episodes } from "@/lib/episodes";
 import { issuedLine } from "@/lib/copy";
 import { ogSize, ticket } from "../../_og/ticket";
 
-export const alt = "A day in the Rich Anthill register.";
+export const alt = "One day of the Rich Anthill series: what was given and what is still unknown.";
 export const size = ogSize;
 export const contentType = "image/png";
 

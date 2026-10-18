@@ -5,7 +5,8 @@ import { media } from "@/content/media";
 import { footageNeeded } from "@/content/footage";
 import { StatusLabel } from "@/components/status/StatusLabel";
 import { Cite } from "@/components/citation/Cite";
-import { HalftonePlate } from "@/components/media/HalftonePlate";
+import { Frame } from "@/components/media/Frame";
+import { Photo } from "@/components/media/Photo";
 import styles from "./experiment.module.css";
 
 export const metadata: Metadata = {
@@ -15,11 +16,16 @@ export const metadata: Metadata = {
 };
 
 const USED_IN: Record<string, string> = {
-  core: "Homepage, the customer record",
-  crumb: "Homepage, after the drop",
-  specimen: "Science, what the experiment measures",
-  bark: "Not shown",
-  scout: "The experiment, closing plate",
+  crumb: "Homepage, the opening descent",
+  mound: "Homepage, the colony",
+  twig: "Homepage, out of sight",
+  scout: "Homepage, a scout finds it",
+  orange: "Homepage, the trail decides the effort",
+  handling: "Homepage, food travels mouth to mouth",
+  pulp: "Homepage, workers burn sugar",
+  worker: "The experiment, closing frame",
+  specimen: "Science, header",
+  moss: "Science, what the experiment measures; homepage, the close",
 };
 
 export default function ExperimentPage() {
@@ -29,8 +35,8 @@ export default function ExperimentPage() {
       <header className={`wrap ${styles.head}`}>
         <h1 className={styles.title}>The experiment</h1>
         <p className={styles.intro}>
-          One person, one anthill, one delivery a day, one reel a day. The plan as far as anyone outside can tell, and what
-          it cannot tell us.
+          One anthill, one feeding a day, one reel a day. The protocol as far as anyone outside can tell, and what it
+          cannot tell us.
         </p>
       </header>
 
@@ -59,7 +65,7 @@ export default function ExperimentPage() {
           </h2>
           <div className={styles.text}>
             <p>
-              On Day 1 the creator promises the colony sugar every day. On Day 3 he brings whey protein. Nobody has yet
+              On Day 1 the creator promises the colony sugar every day. On Day 3 the creator brings whey protein. Nobody has yet
               checked the reels for exact words, amounts or what Day 2 contained.
             </p>
             <StatusLabel status="reported" />
@@ -77,7 +83,7 @@ export default function ExperimentPage() {
           <div className={styles.text}>
             <p>
               One short vertical video a day, posted to Instagram with a day number. There are no counts, weights or fixed
-              camera positions on record. The register logs each reel and leaves observation fields empty until someone
+              camera positions on record. The log records each reel and leaves observation fields empty until someone
               watches and writes them up.
             </p>
           </div>
@@ -97,13 +103,13 @@ export default function ExperimentPage() {
 
         <section className={styles.sec} aria-labelledby="welfare">
           <h2 id="welfare" className={styles.h2}>
-            Looking after the customer
+            Looking after the colony
           </h2>
           <div className={styles.text}>
             <p>
               Lab studies found that a high-protein, low-carbohydrate diet shortened worker lives in black garden ants
               <Cite id="S8" />, and that larvae reduce that cost
-              <Cite id="S7" />. A wild colony has other food and may cope differently. Still, the register suggests:
+              <Cite id="S7" />. A wild colony has other food and may cope differently. Still, this site suggests:
             </p>
             <ul className={styles.list}>
               <li>Keep each day&apos;s amount small and the same.</li>
@@ -155,41 +161,33 @@ export default function ExperimentPage() {
           </h2>
           <div className={styles.text}>
             <p>
-              Every photograph here shows other ants in other places. Each prints as a one-ink halftone with a label. None has
-              a confirmed source or licence yet.
+              Every photograph here shows other ants in other places, and says so on the frame. None has a confirmed
+              source or licence yet.
             </p>
-            <table className={styles.inventory}>
-              <thead>
-                <tr>
-                  <th scope="col">Id</th>
-                  <th scope="col">Shows</th>
-                  <th scope="col">Used in</th>
-                  <th scope="col">Licence</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Object.values(media).map((m) => (
-                  <tr key={m.id}>
-                    <th scope="row">{m.id}</th>
-                    <td>{m.alt}</td>
-                    <td>{USED_IN[m.id] ?? "Not shown"}</td>
-                    <td>{m.licence ?? "Unconfirmed"}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <ul className={styles.contact}>
+              {Object.values(media).map((m) => (
+                <li key={m.id} className={styles.contactItem}>
+                  <Photo media={m} sizes="(min-width: 900px) 16vw, 45vw" className={styles.thumb} decorative />
+                  <p className={styles.contactId}>{m.id}</p>
+                  <p className={styles.contactAlt}>{m.alt}</p>
+                  <p className={styles.contactMeta}>
+                    {USED_IN[m.id] ?? "Not shown"} · Licence: {m.licence ?? "unconfirmed"}
+                  </p>
+                </li>
+              ))}
+            </ul>
             <p className={styles.small}>
               To replace one: drop the new file in <code>assets/</code>, point its entry in <code>content/media.ts</code> at
-              it, set its role, credit and licence, and run <code>pnpm plates</code>.
+              it, set its role, credit and licence, and run <code>pnpm photos</code>.
             </p>
           </div>
         </section>
       </div>
 
-      <div className={`wrap ${styles.plateRow}`}>
-        <HalftonePlate media={media.scout} ratio="16 / 7" caption="One ant on moss, somewhere else entirely." />
-        <p className={styles.back}>
-          <Link href="/days">See every day in the register</Link>
+      <div className={styles.closing}>
+        <Frame media={media.worker} sizes="100vw" className={styles.closingFrame} caption="One worker, somewhere else entirely" />
+        <p className={`wrap ${styles.back}`}>
+          <Link href="/days">See every day so far</Link>
         </p>
       </div>
     </>

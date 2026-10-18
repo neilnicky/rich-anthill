@@ -21,15 +21,28 @@ test("a blocked embed falls back to a plain link", async ({ page }) => {
   await expect(page.getByRole("link", { name: "Watch it on Instagram" })).toHaveAttribute("href", /Deewk4GuUZa/);
 });
 
+test("the opening photograph fills its frame and loads", async ({ page }) => {
+  await page.goto("/");
+  const img = page.locator("section[aria-labelledby='today-title'] figure img").first();
+  await expect(img).toBeVisible();
+  const { h, frameH } = await img.evaluate((el: HTMLImageElement) => ({
+    h: el.getBoundingClientRect().height,
+    frameH: el.closest("figure")!.getBoundingClientRect().height,
+  }));
+  expect(frameH).toBeGreaterThan(300);
+  expect(h).toBeGreaterThanOrEqual(frameH - 1);
+  await expect.poll(() => img.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0)).toBe(true);
+});
+
 test("every stand-in photograph says it is not this colony", async ({ page }) => {
   for (const path of ["/", "/science", "/experiment"]) {
     await page.goto(path);
-    const plates = page.locator("figure:has([role='img'][aria-label])").filter({ has: page.locator("figcaption") });
-    const n = await plates.count();
+    // Every figure with a described photograph carries the stand-in super on the frame
+    const photos = page.locator("figure:has(img:not([alt='']))");
+    const n = await photos.count();
+    expect(n).toBeGreaterThan(0);
     for (let i = 0; i < n; i++) {
-      const fig = plates.nth(i);
-      if ((await fig.locator("svg").count()) > 0) continue; // diagrams
-      await expect(fig.locator("figcaption")).toContainText("Not this colony");
+      await expect(photos.nth(i).locator("figcaption")).toContainText(/not this colony/);
     }
   }
 });

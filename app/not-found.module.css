@@ -4,30 +4,34 @@
   padding-block: var(--s-8) var(--s-9);
 }
 
+/* An empty viewfinder */
 .box {
+  position: relative;
   display: grid;
   align-content: space-between;
   gap: var(--s-8);
-  min-height: 18rem;
+  min-height: 20rem;
   padding: var(--s-5);
-  border: 2px dashed var(--fleck);
+  border: 1px dashed var(--bone-3);
+  background: #0f0b08;
 }
 
 .code {
-  font-family: var(--f-num);
-  font-variation-settings: "wdth" 87;
+  font-family: var(--f-data);
   font-size: var(--t-data);
+  color: var(--bone-2);
 }
 
 .title {
-  font-size: var(--t-display);
-  text-transform: uppercase;
-  font-weight: 840;
-  font-variation-settings: "wdth" 118;
-  color: var(--fleck);
+  font-size: var(--t-hero);
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: -0.035em;
+  color: var(--bone-2);
 }
 
 .text {
+  font-family: var(--f-narr);
   font-size: var(--t-lead);
   max-width: 44ch;
 }

@@ -1,0 +1,304 @@
+/* ───────────── Base: a sideways strip you scroll by touch or trackpad ───────────── */
+
+.days {
+  --stage-h: calc(100svh - var(--header-h) - var(--bottom-nav-h));
+  --frame-w: min(86vw, 62rem);
+  background: var(--soil);
+  border-top: 1px solid var(--line);
+}
+
+.stage {
+  position: relative;
+  padding-block: var(--s-8) var(--s-7);
+}
+
+.rail {
+  /* Containing block for everything inside, so nothing escapes the strip's own scroll */
+  position: relative;
+  display: flex;
+  gap: var(--s-5);
+  padding-inline: var(--margin);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--margin);
+  scrollbar-width: thin;
+}
+
+.lead,
+.frame {
+  flex: none;
+  scroll-snap-align: start;
+}
+
+.lead {
+  width: var(--frame-w);
+  display: grid;
+  grid-template-rows: 1fr auto auto auto;
+  align-content: stretch;
+  gap: var(--s-4);
+  padding: var(--s-5);
+  border: 1px solid var(--line);
+}
+
+.slate {
+  align-self: start;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: auto;
+  border-top: 6px solid var(--bone);
+}
+
+.slate div {
+  padding: var(--s-2) var(--s-3) var(--s-3) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.slate div:nth-child(even) {
+  padding-left: var(--s-3);
+  border-left: 1px solid var(--line);
+}
+
+.slate dt {
+  font-family: var(--f-data);
+  font-size: var(--t-data-s);
+  color: var(--bone-3);
+}
+
+.slate dd {
+  font-family: var(--f-data);
+  font-size: var(--t-data);
+  color: var(--bone);
+  overflow-wrap: anywhere;
+}
+
+.title {
+  font-size: var(--t-display);
+  font-weight: 320;
+  letter-spacing: -0.03em;
+}
+
+.intro {
+  font-family: var(--f-narr);
+  font-size: var(--t-read);
+  line-height: 1.5;
+  color: var(--bone-2);
+  max-width: 36ch;
+}
+
+.hint {
+  display: none;
+}
+
+/* One frame per day: the reel slate and its log entry */
+/* One edge per frame: the reel slate. The frame itself is open soil */
+.frame {
+  width: var(--frame-w);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-5);
+  padding: var(--s-2) 0;
+}
+
+.num {
+  font-family: var(--f-narr);
+  font-size: clamp(4rem, 2rem + 7vw, 8rem);
+  font-weight: 250;
+  font-variation-settings: "opsz" 72;
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+  font-variant-numeric: lining-nums;
+  color: var(--bone);
+  margin-bottom: var(--s-2);
+}
+
+.blank .num {
+  color: var(--bone-3);
+  font-style: italic;
+}
+
+.reel {
+  width: min(48%, 11rem);
+}
+
+.text {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: var(--s-3);
+}
+
+.date {
+  font-family: var(--f-data);
+  font-size: var(--t-data);
+  color: var(--bone-2);
+}
+
+.dayTitle {
+  font-size: var(--t-title);
+  font-weight: 340;
+  letter-spacing: -0.02em;
+}
+
+.given {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin-top: var(--s-2);
+  font-family: var(--f-narr);
+  font-size: var(--t-lead);
+  font-variation-settings: "opsz" 24;
+}
+
+.givenLabel {
+  font-family: var(--f-data);
+  font-size: var(--t-data);
+  color: var(--bone-3);
+  margin-right: var(--s-1);
+}
+
+.mark {
+  flex: none;
+  color: var(--ant);
+}
+
+.given[data-status="confirmed"] .mark {
+  color: var(--lichen);
+}
+
+.given[data-status="unknown"] .mark {
+  color: var(--bone-3);
+}
+
+.summary {
+  max-width: 44ch;
+  color: var(--bone-2);
+  line-height: 1.55;
+}
+
+.open {
+  margin-top: var(--s-2);
+  font-weight: 600;
+  font-size: var(--t-small);
+  color: var(--bone);
+}
+
+/* The day not yet filmed */
+
+.empty {
+  position: relative;
+  width: min(100%, 18rem);
+  aspect-ratio: 9 / 16;
+  border: 1px dashed var(--bone-3);
+}
+
+.rec {
+  position: absolute;
+  top: var(--s-4);
+  right: var(--s-4);
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--ant);
+  animation: rec 2.4s steps(1, end) infinite;
+}
+
+@keyframes rec {
+  50% {
+    opacity: 0.15;
+  }
+}
+
+.time {
+  display: none;
+}
+
+@media (min-width: 720px) {
+  .lead {
+    padding: var(--s-7);
+  }
+  .frame {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--s-7);
+    align-items: center;
+  }
+  .reel {
+    width: min(20rem, 42vh);
+  }
+}
+
+/* ───────────── Enhanced: the strip runs sideways as the page scrolls down ───────────── */
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .track {
+      height: calc(var(--frames) * 75svh + 100svh);
+      view-timeline: --days block;
+    }
+
+    .stage {
+      position: sticky;
+      top: var(--header-h);
+      height: var(--stage-h);
+      padding-block: 0;
+      display: grid;
+      align-content: center;
+      overflow: hidden;
+    }
+
+    .rail {
+      width: max-content;
+      overflow: visible;
+      padding-inline: var(--margin);
+      align-items: stretch;
+      /* Keyframes come from DaysReel (one hold per frame, like a projector advancing). The name
+         travels in a custom property so CSS Modules does not rename it. */
+      animation: var(--run) linear both;
+      animation-timeline: --days;
+      animation-range: contain 0% contain 100%;
+      will-change: transform;
+    }
+
+    .hint {
+      display: block;
+      font-family: var(--f-data);
+      font-size: var(--t-data-s);
+      color: var(--bone-3);
+    }
+
+    /* Elapsed time: a line that fills as the strip runs */
+    .time {
+      display: block;
+      position: absolute;
+      left: var(--margin);
+      right: var(--margin);
+      bottom: var(--s-5);
+      height: 1px;
+      background: var(--line);
+    }
+
+    .timeFill {
+      position: absolute;
+      inset: 0;
+      background: var(--ant);
+      transform-origin: left;
+      animation: fill linear both;
+      animation-timeline: --days;
+      animation-range: contain 0% contain 100%;
+    }
+
+    @keyframes fill {
+      from {
+        transform: scaleX(0);
+      }
+      to {
+        transform: scaleX(1);
+      }
+    }
+
+    @media (max-height: 700px) and (max-width: 719.98px) {
+      .reel {
+        width: min(38%, 9rem);
+      }
+    }
+  }
+}

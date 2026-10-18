@@ -14,7 +14,7 @@ const TIMEOUT_MS = 8000;
  * Click-to-load facade for an Instagram reel. Nothing from instagram.com loads
  * until the visitor asks; a blocked or slow embed falls back to a plain link.
  */
-export function ReelCell({ episode, size = "m" }: { episode: Episode; size?: "m" | "l" }) {
+export function ReelCell({ episode, size = "m" }: { episode: Episode; size?: "s" | "m" | "l" }) {
   const [state, setState] = useState<State>("idle");
   const timer = useRef<number | undefined>(undefined);
   const frame = useRef<HTMLIFrameElement>(null);
@@ -93,7 +93,7 @@ export function ReelCell({ episode, size = "m" }: { episode: Episode; size?: "m"
         ) : null}
       </div>
       <a className={styles.out} href={reel.url} target="_blank" rel="noopener noreferrer">
-        Open Day {day} on Instagram
+        <span className={styles.outLong}>Open Day {day} on</span> Instagram
         <span aria-hidden="true"> ↗</span>
         <span className="visually-hidden"> (opens in a new tab)</span>
       </a>

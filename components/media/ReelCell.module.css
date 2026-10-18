@@ -4,17 +4,19 @@
   justify-items: start;
 }
 
+/* A 9:16 slate standing in for the reel until the visitor asks for it */
 .cell {
   position: relative;
-  width: min(100%, 20rem);
+  width: min(100%, 18rem);
   aspect-ratio: 9 / 16;
-  border: var(--rule);
-  background: var(--paper);
+  border: 1px solid var(--line);
+  background: var(--soil-2);
+  color: var(--bone);
   overflow: hidden;
 }
 
 .cell[data-size="l"] {
-  width: min(100%, 24rem);
+  width: min(100%, 22rem);
 }
 
 .face {
@@ -27,42 +29,41 @@
 }
 
 .code {
-  font-family: var(--f-num);
+  font-family: var(--f-data);
   font-size: var(--t-data);
-  font-variation-settings: "wdth" 87;
+  color: var(--bone-2);
 }
 
 .mark {
   align-self: center;
   justify-self: center;
-  color: var(--ink-chitin-display);
+  color: var(--ant);
 }
 
 .cell[data-status="confirmed"] .mark {
-  color: var(--ink-moss-display);
+  color: var(--lichen);
 }
 
 .cell[data-status="unknown"] .mark {
-  color: var(--fleck);
-}
-
-.meta {
-  font-family: var(--f-num);
-  font-variation-settings: "wdth" 87;
-  font-size: 0.75rem;
-  line-height: 1.4;
-  color: var(--ink-moss);
-  padding-top: var(--s-2);
-  border-top: var(--hairline);
+  color: var(--bone-3);
 }
 
 .food {
-  font-family: var(--f-display);
-  font-weight: 800;
-  font-variation-settings: "wdth" 112;
-  text-transform: uppercase;
-  font-size: 1.375rem;
-  line-height: 1;
+  font-family: var(--f-narr);
+  font-size: 1.5rem;
+  font-weight: 340;
+  font-variation-settings: "opsz" 36;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+}
+
+.meta {
+  font-family: var(--f-data);
+  font-size: var(--t-data-s);
+  line-height: 1.45;
+  color: var(--bone-2);
+  padding-top: var(--s-2);
+  border-top: 1px solid var(--line);
 }
 
 .play {
@@ -70,33 +71,40 @@
   grid-template-columns: auto 1fr;
   align-items: center;
   column-gap: var(--s-3);
-  min-height: 3.5rem;
+  min-height: 3.25rem;
   padding: var(--s-3) var(--s-4);
-  background: var(--ink-umber);
-  color: var(--board);
+  background: var(--bone);
+  color: var(--soil);
   text-align: left;
   font-weight: 600;
+  font-size: var(--t-small);
   line-height: 1.2;
-  transition: transform var(--m-press) var(--ease-press);
+  transition:
+    background-color var(--m-press) ease,
+    transform var(--m-press) var(--ease-out);
+}
+
+.play:hover {
+  background: #fff;
 }
 
 .play:active {
-  transform: translateY(1px);
+  transform: scale(0.98);
 }
 
 .playIcon {
   grid-row: span 2;
   width: 0;
   height: 0;
-  border-left: 12px solid currentColor;
-  border-top: 7px solid transparent;
-  border-bottom: 7px solid transparent;
+  border-left: 11px solid currentColor;
+  border-top: 6.5px solid transparent;
+  border-bottom: 6.5px solid transparent;
 }
 
 .note {
-  font-size: var(--t-caption);
+  font-size: 0.75rem;
   font-weight: 400;
-  opacity: 0.8;
+  color: var(--ink-2);
 }
 
 .frame {
@@ -105,31 +113,80 @@
   width: 100%;
   height: 100%;
   border: 0;
-  background: var(--paper);
+  background: var(--soil-2);
 }
 
 .loading {
   position: absolute;
   inset: auto var(--s-4) var(--s-4);
-  font-family: var(--f-num);
+  font-family: var(--f-data);
   font-size: var(--t-data);
+  color: var(--bone-2);
 }
 
 .message {
-  font-size: var(--t-annot);
-  line-height: 1.4;
+  font-size: var(--t-small);
+  line-height: 1.45;
   padding: var(--s-3) 0 0;
-  border-top: var(--hairline);
+  border-top: 1px solid var(--line);
 }
 
 .cell[data-state="gone"] {
   display: grid;
   place-items: center;
   padding: var(--s-4);
-  border: var(--rule-empty);
+  border: 1px dashed var(--bone-3);
 }
 
 .out {
-  font-weight: 600;
-  font-size: var(--t-annot);
+  font-weight: 500;
+  font-size: var(--t-small);
+  color: var(--bone-2);
+}
+
+/* Compact slate, for the film strip: one line of caption, a short visible link */
+.cell[data-size="s"] .meta {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.cell[data-size="s"] .food {
+  font-size: 1.25rem;
+}
+
+.wrap:has(.cell[data-size="s"]) .outLong {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.cell[data-size="s"] .face {
+  padding: var(--s-3);
+  gap: var(--s-2);
+}
+
+.cell[data-size="s"] .play {
+  min-height: 2.75rem;
+  padding: var(--s-2) var(--s-3);
+  column-gap: var(--s-2);
+  font-size: 0.8125rem;
+}
+
+.cell[data-size="s"] .note {
+  font-size: 0.6875rem;
+}
+
+/* In the strip the frame numeral names the day; the slate does not repeat it */
+.cell[data-size="s"] .code {
+  visibility: hidden;
+}
+
+.cell[data-size="s"] .play {
+  white-space: nowrap;
 }

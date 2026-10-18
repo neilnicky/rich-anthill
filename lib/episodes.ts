@@ -24,7 +24,8 @@ export const neighbours = (day: number) => ({ prev: byDay(day - 1), next: byDay(
 
 export const sourceById = (id: string): Source | undefined => publishableSources.find((s) => s.id === id);
 
-export const dayCode = (day: number) => `№ ${String(day).padStart(3, "0")}`;
+/** "Day 03": the frame number printed on film frames and tickets. */
+export const dayCode = (day: number) => `Day ${String(day).padStart(2, "0")}`;
 
 export function formatDate(iso: string): string {
   const [y, m, d] = iso.split("-").map(Number);

@@ -1,0 +1,152 @@
+.next {
+  background: var(--soil);
+}
+
+/* Back on the surface: a daylight frame, full bleed, with the next day's frame left empty */
+.finder {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: var(--s-6);
+  min-height: calc(100svh - var(--header-h) - var(--bottom-nav-h));
+  padding: calc(var(--frame-inset) + var(--s-9)) calc(var(--margin) + var(--frame-inset)) calc(var(--frame-inset) + var(--s-5));
+}
+
+.light {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.light::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, color-mix(in srgb, var(--soil) 88%, transparent) 0%, color-mix(in srgb, var(--soil) 55%, transparent) 45%, color-mix(in srgb, var(--soil) 10%, transparent) 80%);
+  pointer-events: none;
+}
+
+.light figcaption {
+  z-index: 1;
+}
+
+/* The empty frame: where day N+1 will go */
+.empty {
+  position: absolute;
+  top: 22%;
+  right: calc(var(--margin) + var(--frame-inset) + 4%);
+  width: clamp(7rem, 16vw, 13rem);
+  aspect-ratio: 9 / 16;
+  border: 1px dashed var(--bone);
+  opacity: 0.8;
+}
+
+@media (max-width: 899.98px) {
+  .empty {
+    display: none;
+  }
+}
+
+.rec {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  justify-self: end;
+  font-family: var(--f-data);
+  font-size: var(--t-data);
+  color: var(--bone);
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--ant);
+  animation: rec 2.4s steps(1, end) infinite;
+}
+
+@keyframes rec {
+  50% {
+    opacity: 0.15;
+  }
+}
+
+.body {
+  align-self: start;
+  display: grid;
+  gap: var(--s-5);
+  justify-items: start;
+}
+
+.title {
+  display: grid;
+  font-size: var(--t-hero);
+  font-weight: 300;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+}
+
+.sub {
+  color: var(--bone);
+  font-style: italic;
+}
+
+.lead {
+  max-width: 40ch;
+  font-family: var(--f-narr);
+  font-size: var(--t-lead);
+  line-height: 1.45;
+  color: var(--bone);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+}
+
+.primary,
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.875rem;
+  padding: 0 var(--s-5);
+  font-size: var(--t-small);
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    background-color var(--m-press) ease,
+    border-color var(--m-press) ease;
+}
+
+.primary {
+  background: var(--bone);
+  color: var(--soil);
+}
+
+.primary:hover {
+  background: #fff;
+}
+
+.secondary {
+  border: 1px solid var(--bone-3);
+}
+
+.secondary:hover {
+  border-color: var(--bone);
+}
+
+.strip {
+  align-self: end;
+  min-width: 0;
+}
+
+/* Phones: both actions on one line, so the copy ends above the ant in the frame */
+@media (max-width: 599.98px) {
+  .primary,
+  .secondary {
+    padding: 0 var(--s-4);
+    font-size: 0.8125rem;
+  }
+}

@@ -9,7 +9,7 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "validate": "node --experimental-strip-types scripts/validate-content.mts",
-    "plates": "node scripts/halftone.mjs",
+    "photos": "node scripts/photos.mjs",
     "fonts:og": "node scripts/embed-og-fonts.mjs",
     "test": "vitest run",
     "test:e2e": "playwright test",
@@ -19,7 +19,6 @@
   },
   "packageManager": "pnpm@12.6.0",
   "dependencies": {
-    "motion": "14.3.0",
     "next": "16.4.2",
     "react": "19.3.0",
     "react-dom": "19.3.0",

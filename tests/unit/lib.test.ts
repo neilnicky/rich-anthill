@@ -14,8 +14,8 @@ describe("episode helpers", () => {
   });
 
   it("formats codes and dates", () => {
-    expect(dayCode(3)).toBe("№ 003");
-    expect(dayCode(120)).toBe("№ 120");
+    expect(dayCode(3)).toBe("Day 03");
+    expect(dayCode(120)).toBe("Day 120");
     expect(formatDate("2026-10-16")).toBe("16 Oct 2026");
   });
 
@@ -26,8 +26,8 @@ describe("episode helpers", () => {
   });
 
   it("builds the opening copy from data only", () => {
-    expect(issuedLine(latest())).toBe("Protein issued");
-    expect(issueSentence(episodes)).toBe("Day 1 was sugar. Day 3 was protein.");
+    expect(issuedLine(latest())).toBe("Whey protein");
+    expect(issueSentence(episodes)).toBe("Day 1 was sugar. Day 3 was whey protein.");
   });
 
   it("only resolves publishable sources", () => {

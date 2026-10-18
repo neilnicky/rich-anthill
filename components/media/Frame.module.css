@@ -1,0 +1,65 @@
+/* Zero specificity, so a scene can place the frame (absolute, sized) whatever the CSS order */
+:where(.frame) {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  color: var(--bone);
+}
+
+.photo {
+  position: absolute;
+  inset: 0;
+}
+
+/* Viewfinder corner ticks, drawn with four short borders */
+.ticks {
+  position: absolute;
+  inset: var(--frame-inset);
+  pointer-events: none;
+  --t: var(--tick);
+  background:
+    linear-gradient(var(--bone), var(--bone)) top left / var(--t) 1px no-repeat,
+    linear-gradient(var(--bone), var(--bone)) top left / 1px var(--t) no-repeat,
+    linear-gradient(var(--bone), var(--bone)) top right / var(--t) 1px no-repeat,
+    linear-gradient(var(--bone), var(--bone)) top right / 1px var(--t) no-repeat,
+    linear-gradient(var(--bone), var(--bone)) bottom left / var(--t) 1px no-repeat,
+    linear-gradient(var(--bone), var(--bone)) bottom left / 1px var(--t) no-repeat,
+    linear-gradient(var(--bone), var(--bone)) bottom right / var(--t) 1px no-repeat,
+    linear-gradient(var(--bone), var(--bone)) bottom right / 1px var(--t) no-repeat;
+  opacity: 0.85;
+}
+
+.caption {
+  position: absolute;
+  left: calc(var(--frame-inset) + var(--s-3));
+  right: calc(var(--frame-inset) + var(--s-3));
+  bottom: calc(var(--frame-inset) + var(--s-2));
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-1) var(--s-4);
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--f-data);
+  font-size: var(--t-data-s);
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  pointer-events: none;
+}
+
+.frame[data-super="top"] .caption {
+  bottom: auto;
+  top: calc(var(--frame-inset) + var(--s-2));
+}
+
+/* The super: a solid soil strip, legible over any photograph */
+.super {
+  padding: 3px 7px 4px;
+  background: color-mix(in srgb, var(--soil) 82%, transparent);
+  color: var(--bone);
+}
+
+.note {
+  padding: 3px 7px 4px;
+  background: color-mix(in srgb, var(--soil) 82%, transparent);
+  color: var(--bone-2);
+}

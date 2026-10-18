@@ -6,11 +6,14 @@ type Props = { status: Status | "science" | "hypothesis"; children?: React.React
 
 const TEXT = { ...STATUS_TEXT, science: "Published study", hypothesis: "Open question" } as const;
 
-/** The words that carry a fact's status. Colour repeats it; it never carries it alone. */
+/**
+ * The words that carry a fact's status, led by a focus mark: sharp for confirmed, soft for
+ * reported, an empty dashed ring for unknown. The mark repeats the words; it never replaces them.
+ */
 export function StatusLabel({ status, children }: Props) {
   return (
     <span className={styles.label} data-status={status}>
-      <span className={styles.swatch} aria-hidden="true" />
+      <span className={styles.mark} aria-hidden="true" />
       {children ?? TEXT[status]}
     </span>
   );

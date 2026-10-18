@@ -1,46 +1,63 @@
+/* The protocol: headings in a left column, text in a reading column, a contact sheet of stand-ins */
 .head {
   display: grid;
   gap: var(--s-5);
-  padding-block: var(--s-8);
+  padding-block: var(--s-9) var(--s-7);
 }
 
 .title {
-  font-size: var(--t-display);
-  text-transform: uppercase;
-  font-weight: 840;
-  font-variation-settings: "wdth" 118;
+  font-size: var(--t-hero);
+  font-weight: 300;
+  letter-spacing: -0.035em;
 }
 
 .intro {
-  max-width: 48ch;
+  max-width: 42ch;
+  font-family: var(--f-narr);
   font-size: var(--t-lead);
   line-height: 1.45;
+  color: var(--bone-2);
 }
 
 .doc {
   display: grid;
+  padding-bottom: var(--s-9);
 }
 
 .sec {
   display: grid;
   gap: var(--s-4);
-  padding-block: var(--s-7);
-  border-top: var(--rule);
-  scroll-margin-top: var(--header-h);
+  padding-block: var(--s-6) var(--s-7);
+  border-top: 1px solid var(--line);
+  scroll-margin-top: calc(var(--header-h) + var(--s-4));
 }
 
 .h2 {
   font-size: var(--t-title);
-  text-transform: uppercase;
-  font-weight: 820;
-  font-variation-settings: "wdth" 114;
+  font-weight: 340;
+  letter-spacing: -0.02em;
 }
 
 .text {
   display: grid;
   gap: var(--s-4);
   justify-items: start;
-  max-width: var(--measure);
+  max-width: 62ch;
+  font-family: var(--f-narr);
+  font-size: var(--t-read);
+  line-height: 1.6;
+  color: var(--bone-2);
+}
+
+.text strong {
+  color: var(--bone);
+  font-weight: 500;
+}
+
+.text code {
+  font-family: var(--f-data);
+  font-size: 0.85em;
+  color: var(--bone);
 }
 
 .list {
@@ -50,105 +67,115 @@
 }
 
 .small {
-  font-size: var(--t-annot);
-  color: var(--ink-umber);
-  font-weight: 560;
+  font-family: var(--f-text);
+  font-size: var(--t-small);
+  color: var(--bone-3);
 }
 
+/* Shot list: the numbers are shot numbers, and the crew reads them aloud */
 .shots {
   list-style: none;
   padding: 0;
   display: grid;
   width: 100%;
-  border-top: var(--hairline);
+  border-top: 1px solid var(--bone-3);
 }
 
 .shot {
   display: grid;
-  grid-template-columns: 2.5rem 1fr;
+  grid-template-columns: 3rem minmax(0, 1fr);
   gap: var(--s-1) var(--s-3);
   padding-block: var(--s-4);
-  border-bottom: var(--hairline);
+  border-bottom: 1px solid var(--line);
 }
 
 .shotNo {
   grid-row: span 2;
-  font-family: var(--f-num);
-  font-variation-settings: "wdth" 87;
+  font-family: var(--f-data);
   font-size: var(--t-data);
+  color: var(--ant);
+  padding-top: 0.2em;
 }
 
 .shotText {
-  font-weight: 600;
+  color: var(--bone);
 }
 
 .shotWhy {
-  font-size: var(--t-annot);
+  font-family: var(--f-text);
+  font-size: var(--t-small);
+  color: var(--bone-2);
 }
 
-.inventory {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: var(--t-annot);
-}
-
-.inventory th,
-.inventory td {
-  padding: var(--s-2) var(--s-3) var(--s-2) 0;
-  text-align: left;
-  vertical-align: top;
-  border-bottom: var(--hairline);
-}
-
-.inventory thead th {
-  font-family: var(--f-num);
-  font-variation-settings: "wdth" 87;
-  font-weight: 450;
-  font-size: 0.75rem;
-}
-
-.inventory tbody th {
-  font-family: var(--f-num);
-  font-variation-settings: "wdth" 87;
-  font-weight: 500;
-}
-
-.text code {
-  font-family: var(--f-num);
-  font-size: 0.875em;
-  padding: 0 0.25em;
-  background: var(--paper);
-}
-
-.plateRow {
+/* Contact sheet of every stand-in */
+.contact {
+  list-style: none;
+  padding: 0;
   display: grid;
-  gap: var(--s-5);
-  padding-top: var(--s-7);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-5) var(--s-4);
+  width: 100%;
+  margin-top: var(--s-2);
 }
 
-.back {
-  font-weight: 600;
+.contactItem {
+  display: grid;
+  gap: var(--s-1);
+  align-content: start;
+  font-family: var(--f-text);
+}
+
+.thumb {
+  aspect-ratio: 4 / 3;
+  margin-bottom: var(--s-2);
+}
+
+.contactId {
+  font-family: var(--f-data);
+  font-size: var(--t-data);
+  color: var(--bone);
+}
+
+.contactAlt {
+  font-size: var(--t-small);
+  line-height: 1.45;
+  color: var(--bone-2);
+}
+
+.contactMeta {
+  font-family: var(--f-data);
+  font-size: var(--t-data-s);
+  line-height: 1.5;
+  color: var(--bone-3);
 }
 
 @media (min-width: 900px) {
   .sec {
     grid-template-columns: 4fr 8fr;
-    column-gap: var(--gutter);
+    column-gap: var(--s-8);
+  }
+  .contact {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 599.98px) {
-  .inventory thead {
-    display: none;
+@media (min-width: 1280px) {
+  .contact {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
-  .inventory tr {
-    display: grid;
-    padding-block: var(--s-3);
-    border-bottom: var(--hairline);
-  }
-  .inventory th,
-  .inventory td {
-    border: 0;
-    padding: 0;
-  }
+}
+
+/* Closing frame, full bleed */
+.closing {
+  display: grid;
+}
+
+.closingFrame {
+  width: 100%;
+  height: clamp(18rem, 44vw, 40rem);
+}
+
+.back {
+  padding-block: var(--s-6) var(--s-9);
+  font-weight: 600;
 }

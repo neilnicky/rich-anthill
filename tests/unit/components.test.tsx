@@ -3,9 +3,11 @@ import { act, fireEvent, render, screen } from "@testing-library/react";
 import { episodes, byDay, sourceById } from "@/lib/episodes";
 import { RegisterStrip } from "@/components/register/RegisterStrip";
 import { StatusLabel } from "@/components/status/StatusLabel";
+import { Registration } from "@/components/status/Registration";
 import { ReelCell } from "@/components/media/ReelCell";
 import { CitationChip } from "@/components/citation/CitationChip";
-import { HalftonePlate } from "@/components/media/HalftonePlate";
+import { Frame, STAND_IN_SUPER } from "@/components/media/Frame";
+import { Photo } from "@/components/media/Photo";
 import { media } from "@/content/media";
 
 vi.mock("next/navigation", () => ({ usePathname: () => "/", useRouter: () => ({ push: vi.fn() }) }));
@@ -16,7 +18,7 @@ describe("RegisterStrip", () => {
     const links = screen.getAllByRole("link");
     expect(links.map((l) => l.getAttribute("href"))).toEqual(["/days/1", "/days/2", "/days/3"]);
     expect(links[2]).toHaveAttribute("aria-current", "date");
-    expect(screen.getByText(/Not yet issued/)).toBeInTheDocument();
+    expect(screen.getByText(/Not yet filmed/)).toBeInTheDocument();
   });
 
   it("shows New only for days after the last visit", async () => {
@@ -119,10 +121,47 @@ describe("CitationChip", () => {
   });
 });
 
-describe("HalftonePlate", () => {
-  it("labels every stand-in as not this colony", () => {
-    render(<HalftonePlate media={media.crumb} />);
-    expect(screen.getByText(/Stand-in photograph\. Not this colony\./)).toBeInTheDocument();
+describe("Registration", () => {
+  it("softens reported facts without repeating their words in the DOM", () => {
+    const { container } = render(<Registration state="reported">Whey protein</Registration>);
+    const el = container.firstElementChild!;
+    expect(el).toHaveAttribute("data-soft", "Whey protein");
+    expect(screen.getAllByText("Whey protein")).toHaveLength(1);
+  });
+
+  it("keeps confirmed facts sharp", () => {
+    const { container } = render(<Registration state="confirmed">16 Oct 2026</Registration>);
+    expect(container.firstElementChild).not.toHaveAttribute("data-soft");
+  });
+});
+
+describe("Frame", () => {
+  it("prints the stand-in super on every stand-in frame, with the photo described", () => {
+    const { container } = render(<Frame media={media.crumb} sizes="100vw" caption="Why it is here" />);
+    expect(screen.getByText(STAND_IN_SUPER)).toBeInTheDocument();
+    expect(STAND_IN_SUPER).toMatch(/not this colony/);
+    expect(container.querySelector("figcaption")).toHaveTextContent("Why it is here");
     expect(screen.getByRole("img", { name: media.crumb.alt })).toBeInTheDocument();
+  });
+});
+
+describe("Photo", () => {
+  it("offers every built width as AVIF and WebP", () => {
+    const { container } = render(<Photo media={media.scout} sizes="50vw" />);
+    const [avif, webp] = container.querySelectorAll("source");
+    expect(avif).toHaveAttribute("type", "image/avif");
+    expect(webp).toHaveAttribute("type", "image/webp");
+    for (const w of media.scout.widths) {
+      expect(avif.getAttribute("srcset")).toContain(`/media/photos/scout-${w}.avif ${w}w`);
+      expect(webp.getAttribute("srcset")).toContain(`/media/photos/scout-${w}.webp ${w}w`);
+    }
+  });
+
+  it("hides decorative photos and the focus-pull layer from assistive tech", () => {
+    const { container } = render(<Photo media={media.crumb} sizes="100vw" soft decorative />);
+    const imgs = container.querySelectorAll("img");
+    expect(imgs[0]).toHaveAttribute("alt", "");
+    expect(imgs[1]).toHaveAttribute("aria-hidden", "true");
+    expect(imgs[1].getAttribute("src")).toBe("/media/photos/crumb-soft.webp");
   });
 });

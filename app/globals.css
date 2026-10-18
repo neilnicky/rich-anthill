@@ -16,32 +16,26 @@ html {
   scroll-padding-top: calc(var(--header-h) + var(--s-4));
   scroll-padding-bottom: var(--bottom-nav-h);
   hanging-punctuation: first last;
+  background: var(--soil);
+  scrollbar-color: var(--bone-3) var(--soil);
 }
 
 body {
   min-height: 100svh;
-  background-color: var(--board);
-  /* Recycled-board fibre: a faint, fixed fleck texture. Material, not decoration. */
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' seed='7' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .17  0 0 0 0 .13  0 0 0 0 .1  0 0 0 -1.6 1.05'/></filter><rect width='100%' height='100%' filter='url(%23f)' opacity='.16'/></svg>");
-  color: var(--ink-umber);
+  background: var(--soil);
+  color: var(--bone);
   font-family: var(--f-text);
   font-size: var(--t-body);
   line-height: 1.6;
-  font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
   padding-bottom: var(--bottom-nav-h);
-}
-
-@media (prefers-color-scheme: dark) {
-  body {
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' seed='7' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .83  0 0 0 0 .81  0 0 0 0 .77  0 0 0 -1.6 1.05'/></filter><rect width='100%' height='100%' filter='url(%23f)' opacity='.07'/></svg>");
-  }
 }
 
 img,
 svg,
 video,
-canvas {
+canvas,
+picture {
   display: block;
   max-width: 100%;
 }
@@ -65,12 +59,12 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: var(--f-display);
-  font-weight: 780;
-  font-variation-settings: "wdth" 108;
-  line-height: 1;
+  font-family: var(--f-narr);
+  font-weight: 340;
+  font-variation-settings: "opsz" 72;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
   text-wrap: balance;
-  letter-spacing: -0.01em;
 }
 
 p,
@@ -82,10 +76,10 @@ figcaption {
 
 a {
   color: inherit;
-  text-decoration-thickness: 1.5px;
-  text-underline-offset: 0.22em;
-  text-decoration-color: var(--fleck);
-  transition: text-decoration-color var(--m-press) var(--ease-print);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.24em;
+  text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+  transition: text-decoration-color var(--m-press) ease;
 }
 
 @media (hover: hover) {
@@ -95,26 +89,25 @@ a {
 }
 
 :focus-visible {
-  outline: 3px solid var(--focus);
+  outline: 2px solid var(--focus);
   outline-offset: 3px;
-  border-radius: 0;
 }
 
 ::selection {
-  background: var(--ink-umber);
-  color: var(--board);
+  background: var(--ant);
+  color: var(--soil);
 }
 
 ::marker {
-  color: var(--fleck);
-}
-
-html {
-  scrollbar-color: var(--fleck) var(--board);
+  color: var(--bone-3);
 }
 
 abbr[title] {
-  text-decoration: underline dotted var(--fleck);
+  text-decoration: underline dotted;
+}
+
+.tnum {
+  font-variant-numeric: tabular-nums;
 }
 
 .visually-hidden {
@@ -136,14 +129,26 @@ abbr[title] {
   padding-inline: var(--margin);
 }
 
+/* A reading sheet: ash paper laid over the footage */
+.sheet {
+  background: var(--ash);
+  color: var(--ink);
+  --focus: var(--ant-ash);
+}
+
+.sheet ::selection {
+  background: var(--ink);
+  color: var(--ash);
+}
+
 .skip-link {
   position: fixed;
   top: var(--s-3);
   left: var(--s-3);
   z-index: 100;
   padding: var(--s-3) var(--s-4);
-  background: var(--ink-umber);
-  color: var(--board);
+  background: var(--bone);
+  color: var(--soil);
   font-weight: 600;
   text-decoration: none;
   transform: translateY(-200%);
